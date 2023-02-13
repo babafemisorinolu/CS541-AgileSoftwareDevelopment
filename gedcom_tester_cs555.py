@@ -1,35 +1,189 @@
-valid_tags = {'0': ["HEAD", "NOTE", "TRLR", "FAM", "INDI"],
-    '1': ["BIRT", "CHIL", "DEAT", "DIV", "FAMC", "FAMS", "HUSB","MARR", "NAME", "SEX", "WIFE"],
-    '2': ["DATE"], '3': []}
-    
+#!/usr/bin/python
+
+# -------------------
+# Team 1
+# CS 555 Project 3
+# -------------------
+
+from tabulate import tabulate
+from datetime import date, datetime
+
+# This is statement is required by the build system to query build infos
+if __name__ == '__build__':
+	raise Exception;
+
+import sys;
+
+# creates a new "person" object
+class Individual:
+	def __init__(self, id):
+		self.info = {'ID': id} # dict to save individual information
 
 
-def analyze_gedcom_line(line):
-    arr=line.split(" ")
-    
-    res=""
-    if(arr[0]=="0") and (("INDI" in arr) or ("FAM" in arr)):
-        res=arr[0]+"|"+arr[2]+"|Y|"+arr[1]
-    elif arr[1] in valid_tags[arr[0]]:
-        res=arr[0]+"|"+arr[1]+"|Y|"+" ".join(arr[2:])
-    else:
-        res=arr[0]+"|"+arr[1]+"|N|"+" ".join(arr[2:])
-    return res
-    
-print('Program that Reads each line of a GEDCOM file')
-filename=input ("Please enter the name of the file")
-if(filename==""):
-    filename="GEDCOM_export-Forest.ged"
-try:
-    gedcom_file = open(filename, 'r')
-except FileNotFoundError:
-    raise FileNotFoundError(f"Can't open {path}")
+# creates a new "family" object
+class Family:
+	def __init__(self, id):
+		self.info = {'ID': id} # dict to save family information
+	   
 
-with gedcom_file:
-    for line in gedcom_file:
-        line = line.rstrip()
-        print("--> ",line)
-        output_analysis=analyze_gedcom_line(line)
-        print("<-- ",output_analysis)
-        
+# all the valid tags for the project, along with their corresponding levels
+validTags = {
+	'0': [{'HEAD', 'TRLR', 'NOTE'}, {'INDI', 'FAM'}],
+	'1': [{'NAME', 'SEX', 'BIRT', 'DEAT', 'FAMC', 'FAMS'}, {'MARR', 'HUSB', 'WIFE', 'CHIL', 'DIV'}],
+	'2': {'DATE'},
+};
 
+# list of all individuals
+indis = []
+# list of all families
+fams = []
+
+# read and evalute if each new line is in valid GEDCOM format
+def readLine(fileLine):
+	args = fileLine.split();
+
+	# end of file check
+	if not args: 
+		return;
+
+	# valid level check (cannot go past level 2)
+	if args[0] not in validTags:
+		print(validOutput(fileLine, args, 'N'))
+		raise Exception("Please provide a valid level number") 
+
+	if args[0] == '0':
+
+		if args[1] in validTags[args[0]][0]:
+			return # these tags aren''t needed
+		
+		# individual and family id tags have a different format
+		elif args[2] in validTags[args[0]][1]:
+			if args[2] == 'INDI':
+				indi = Individual(args[1]) # creates new individual object with id specified by args[1]
+				indis.append(indi.info) # add object dict to list of individuals
+			else:
+				fam = Family(args[1]) # creates new family object with id specified by args[1]
+				fams.append(fam.info) # add object dict to list of families
+
+		# valid tag check (must be a tag specified in valid tags)
+		else:
+			print(validOutput(fileLine, args, 'N'))
+			raise Exception("Please provide a valid id tag in the proper format") 
+
+	elif args[0] == '1':
+
+		if args[1] in validTags[args[0]][0]: # these tags specify certain information for the individual it describes 
+			# edge case - FAMS information should be a list of strings since you can have multiple spouces
+			if args[1] == 'FAMS':
+				if args[1] not in indis[len(indis)-1]:
+					indis[len(indis)-1][args[1]] = [' '.join(args[2:])]
+				else:
+					indis[len(indis)-1][args[1]].append(' '.join(args[2:]))
+			elif len(args) > 2:
+				indis[len(indis)-1][args[1]] = ' '.join(args[2:]) # store the infomation for the most recent person added to the "indis" list
+			
+			else:
+				# edge case - information is within a nested date tag and not on the same line, save the tag for later
+				indis.append(args[1])
+				
+		elif args[1] in validTags[args[0]][1]: # these tags specify certain information for the family it describes 
+			
+			# edge case - FAMS information should be a list of strings since you can have multiple spouces
+			if args[1] == 'CHIL':
+				if args[1] not in fams[len(fams)-1]:
+					fams[len(fams)-1][args[1]] = [' '.join(args[2:])]
+				else:
+					fams[len(fams)-1][args[1]].append(' '.join(args[2:]))
+			elif len(args) > 2:
+				fams[len(fams)-1][args[1]] = ' '.join(args[2:]) # store the infomation for the most recent family added to the "fams" list
+			else:
+				# edge case - information is within a nested date tag and not on the same line, save the tag for later
+				fams.append(args[1]) 
+		
+		# valid tag check (must be a tag specified in valid tags)
+		else:
+			print(validOutput(fileLine, args, 'N'))
+			raise Exception("Please provide a valid tag in the proper format") 
+
+	elif args[1] in validTags[args[0]]:
+		# date tag - take the previous saved tag and add date information to the previously saved object in array
+		if isinstance(indis[len(indis)-1], str):
+			tag = indis.pop()
+			indis[len(indis)-1][tag] = ' '.join(args[2:])
+		elif isinstance(fams[len(fams)-1], str):
+			tag = fams.pop()
+			fams[len(fams)-1][tag] = ' '.join(args[2:])
+		# valid format check (date must proceed a level 1 tag)
+		else:
+			print(validOutput(fileLine, args, 'N'))
+			raise Exception("Please make sure your DATE tag belongs to a valid tag") 
+	else:
+		print(validOutput(fileLine, args, 'N'))
+		raise Exception("Improper GEDCOM format") 	
+
+	# print(validOutput(fileLine, args, 'Y'))
+	return
+
+
+# print the input and output of each new line 
+def validOutput(fileLine, args, isValid):
+	returnOutput = "--> {0}\n".format(fileLine.rstrip('\r\n'));
+	returnOutput += "<-- ";
+
+	# print output in the format "<-- <level>|<tag>|<valid?> : Y or N|<arguments>"
+	for i in range(len(args)):
+		returnOutput += args[i];
+		if i == 0:
+			returnOutput += "|";
+		elif i == 1:
+			returnOutput += "|{}|".format(isValid)
+			if len(args) == 2:
+				returnOutput += "\n";
+		elif i < len(args)-1:
+			returnOutput += " ";
+		else:
+			returnOutput += "\n";
+			
+	return returnOutput;
+
+# calculates an individual's age and whether they are alive, adds this to their dictionary
+def getAge(today, personInfo):
+	birth = datetime.strptime(personInfo["BIRT"], '%d %b %Y').date()
+	if 'DEAT' in personInfo:
+		death = datetime.strptime(personInfo["DEAT"], '%d %b %Y').date()
+		personInfo["AGE"] = death.year - birth.year - ((death.month, death.day) < (birth.month, birth.day))
+		personInfo["ALIVE"] = False
+	else:
+		personInfo["AGE"] = today.year - birth.year - ((today.month, today.day) < (birth.month, birth.day))
+		personInfo["ALIVE"] = True
+		
+	return personInfo
+
+# main method
+def init():
+	try:
+		filename=input ("Please enter the name of the file")
+		if(filename==""):
+			filename="test.ged"
+		with open(filename, 'r') as infile:
+			for line in infile:
+				readLine(line);
+				
+	except FileNotFoundError:
+		print ('''
+		ERROR: GEDCOM file does not exist.
+		''');
+		sys.exit();
+
+	currDate = date.today()
+	for person in indis:
+		person = getAge(currDate, person)
+		
+
+	print(tabulate(indis, headers = "keys"))
+	print()
+	print(tabulate(fams, headers = "keys"))
+
+
+init()
+sys.exit();
