@@ -191,6 +191,10 @@ def init():
 		''');
 		sys.exit();
 
+	# sort each list by their ID nums
+	indis.sort(key=lambda info: int(''.join(filter(str.isdigit, info["ID"])))) 
+	fams.sort(key=lambda info: int(''.join(filter(str.isdigit, info["ID"])))) 
+
 	currDate = date.today()
 	for person in indis:
 		person = getAge(currDate, person)
@@ -205,13 +209,16 @@ def init():
 		wifeName = searchID(len(indis), 0, wifeID)
 
 		if not husbName or not wifeName: # ID not found in list
+			print(wifeID, husbID)
 			raise Exception("Family Husband and Wife IDs must exist.")
 
 		family["HUSB NAME"] = husbName
 		family["WIFE NAME"] = wifeName
 
-		
-
 	print(tabulate(indis, headers = "keys"))
 	print()
 	print(tabulate(fams, headers = "keys"))
+
+init()
+sys.exit();
+
