@@ -121,7 +121,7 @@ def readLine(fileLine):
 		print(validOutput(fileLine, args, 'N'))
 		raise Exception("Improper GEDCOM format") 	
 
-	# print(validOutput(fileLine, args, 'Y'))
+	#print(validOutput(fileLine, args, 'Y'))
 	return
 
 
@@ -159,16 +159,32 @@ def getAge(today, personInfo):
 		
 	return personInfo
 
+# binary search through the list of individuals to find the matching ID
+def searchID (high, low, target):
+	if high <= low:
+		return False
+
+	mid = (high+low)//2
+
+	# turn midpoint string ID into a number
+	midNum = int(''.join(filter(str.isdigit, indis[mid]['ID'])))
+
+	if midNum > target:
+		return searchID(mid, low, target)
+	if midNum < target:
+		return searchID(high, mid+1, target)
+	return indis[mid]["NAME"]
+
+
 # main method
 def init():
 	try:
-		filename=input ("Please enter the name of the file")
+		filename = input("Please enter the name of the file: ")
 		if(filename==""):
 			filename="test.ged"
 		with open(filename, 'r') as infile:
 			for line in infile:
 				readLine(line);
-				
 	except FileNotFoundError:
 		print ('''
 		ERROR: GEDCOM file does not exist.
@@ -178,12 +194,24 @@ def init():
 	currDate = date.today()
 	for person in indis:
 		person = getAge(currDate, person)
+
+	for family in fams:
+		# turn husband string ID into a number
+		husbID = int(''.join(filter(str.isdigit, family["HUSB"])))
+		husbName = searchID(len(indis), 0, husbID)
+
+		# turn wife string ID into a number
+		wifeID = int(''.join(filter(str.isdigit, family["WIFE"])))
+		wifeName = searchID(len(indis), 0, wifeID)
+
+		if not husbName or not wifeName: # ID not found in list
+			raise Exception("Family Husband and Wife IDs must exist.")
+
+		family["HUSB NAME"] = husbName
+		family["WIFE NAME"] = wifeName
+
 		
 
 	print(tabulate(indis, headers = "keys"))
 	print()
 	print(tabulate(fams, headers = "keys"))
-
-
-init()
-sys.exit();
