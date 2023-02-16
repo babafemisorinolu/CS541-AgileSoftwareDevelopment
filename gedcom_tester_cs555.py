@@ -179,18 +179,27 @@ def init():
 	for family in fams:
 		# turn husband string ID into a number
 		husbID = int(''.join(filter(str.isdigit, family["HUSB"])))
-		husbName = searchID(indis, len(indis), 0, husbID)
+		husb = searchByID(indis, len(indis), 0, husbID)
 
 		# turn wife string ID into a number
 		wifeID = int(''.join(filter(str.isdigit, family["WIFE"])))
-		wifeName = searchID(indis, len(indis), 0, wifeID)
+		wife = searchByID(indis, len(indis), 0, wifeID)
 
-		if not husbName or not wifeName: # ID not found in list
-			print(wifeID, husbID)
-			raise Exception("Family Husband and Wife IDs must exist.")
+		family["HUSB NAME"] = husb["NAME"]
+		family["WIFE NAME"] = wife["NAME"]
 
-		family["HUSB NAME"] = husbName
-		family["WIFE NAME"] = wifeName
+		# US09 - Birth before death of parents
+		if "CHIL" in family:
+			for childStringID in family["CHIL"]:
+				childID = int(''.join(filter(str.isdigit, childStringID)))
+				child = searchByID(indis, len(indis), 0, childID)
+				childBirthdate = child["BIRT"]
+
+				if not wife["ALIVE"] and not birthBeforeMomDeath(childBirthdate, wife["DEAT"]):
+					errors.append("ERROR: FAMILY: US09: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " after DEAT of mother on " + wife["DEAT"].strftime("%x") + ".")
+
+				if not husb["ALIVE"] and not birthBeforeDadDeath(childBirthdate, husb["DEAT"]):
+					errors.append("ERROR: FAMILY: US09: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " 9 months after DEAT of father on " + husb["DEAT"].strftime("%x") + ".")
 
 	
 	# write table results to a new file

@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 # -------------------
 # Team 1
 # CS 555 Sprint 1
@@ -56,10 +54,10 @@ def getAge(today, personInfo):
 		
 	return personInfo
 
-# binary search through the list of objects to find the matching ID key
-def searchID(array, high, low, target):
+# binary search through the list of objects to find the one with matching ID key
+def searchByID(array, high, low, target):
 	if high <= low:
-		return False
+		raise Exception("ID " + target + " not found.") 
 
 	mid = (high+low)//2
 
@@ -67,8 +65,8 @@ def searchID(array, high, low, target):
 	midNum = int(''.join(filter(str.isdigit, array[mid]['ID'])))
 
 	if midNum > target:
-		return searchID(array, mid, low, target)
+		return searchByID(array, mid, low, target)
 	if midNum < target:
-		return searchID(array, high, mid+1, target)
-	return array[mid]["NAME"]
+		return searchByID(array, high, mid+1, target)
+	return array[mid]
 
