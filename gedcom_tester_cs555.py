@@ -27,7 +27,6 @@ class Individual:
 class Family:
 	def __init__(self, id):
 		self.info = {'ID': id} # dict to save family information
-	   
 
 # all the valid tags for the project, along with their corresponding levels
 validTags = {
@@ -46,8 +45,8 @@ errors = []
 
 # today's date for error checking and age calculation
 currDate = date.today()
-	
-# read and evalute if each new line is in valid GEDCOM format
+
+# read and evalute if each new line is in valid GEDCOM format, then populate individual and family arrays
 def readLine(fileLine):
 	args = fileLine.split();
 
@@ -152,7 +151,6 @@ def readLine(fileLine):
 		raise Exception("Improper GEDCOM format") 	
 
 	return
-
 
 # main method
 def init():
