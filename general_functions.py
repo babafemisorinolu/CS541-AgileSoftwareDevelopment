@@ -97,6 +97,5 @@ def Family_names(names):
 			first_names.append(names[0])
 
 	result = {x for x in first_names if first_names.count(x) > 1}
-	if result :
-		raise Exception("First names of individuals in the family cannot be same.")
-			
+	return result
+	
