@@ -88,4 +88,15 @@ def AgeGreaterThan150(person):
 	if (person["AGE"]>=150):
 		return True
 	return False	
-	
+
+#US-25 First Names should be unique in the family
+def Family_names(names):
+	first_names = []
+	for nam in names :
+			names = nam.split(" ")
+			first_names.append(names[0])
+
+	result = {x for x in first_names if first_names.count(x) > 1}
+	if result :
+		raise Exception("First names of individuals in the family cannot be same.")
+			

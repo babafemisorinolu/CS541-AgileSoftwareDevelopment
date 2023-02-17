@@ -22,7 +22,6 @@ class Individual:
 	def __init__(self, id):
 		self.info = {'ID': id} # dict to save individual information
 
-
 # creates a new "family" object
 class Family:
 	def __init__(self, id):
@@ -39,6 +38,10 @@ validTags = {
 indis = []
 # list of all families
 fams = []
+#list of individual ids
+indis_id = []
+#list of family ids
+fams_id = []
 
 # list of all GEDCOM errors in the source file
 errors = []
@@ -67,11 +70,21 @@ def readLine(fileLine):
 		# individual and family id tags have a different format
 		elif args[2] in validTags[args[0]][1]:
 			if args[2] == 'INDI':
-				indi = Individual(args[1]) # creates new individual object with id specified by args[1]
-				indis.append(indi.info) # add object dict to list of individuals
+				#US-22 Unique IDs
+				if args[1] not in indis_id: # check whether the individual IDs are unique or not
+					indi = Individual(args[1]) # creates new individual object with id specified by args[1]
+					indis.append(indi.info) # add object dict to list of individuals
+					indis_id.append(args[1])
+				else:
+					raise Exception("Individual IDs are duplicate. Please provide correct ID.")
 			else:
-				fam = Family(args[1]) # creates new family object with id specified by args[1]
-				fams.append(fam.info) # add object dict to list of families
+				#check whether the family ID is unique or not
+				if args[1] not in fams_id:
+					fam = Family(args[1]) # creates new family object with id specified by args[1]
+					fams.append(fam.info) # add object dict to list of families
+					fams_id.append(args[1])
+				else:
+					raise Exception("Family IDs are duplicate. Please provide correct ID.")
 
 		# valid tag check (must be a tag specified in valid tags)
 		else:
@@ -189,13 +202,23 @@ def init():
 				errors.append("Birth should occur before death of an individual")
 
 	for family in fams:
+		#names of all the individuals in the family
+		family_names = []
 		# turn husband string ID into a number
 		husbID = int(''.join(filter(str.isdigit, family["HUSB"])))
 		husb = searchByID(indis, len(indis), 0, husbID)
+		if not husb:
+			raise Exception("Husband ID must exist.")
+		else:
+			family_names.append(husb['NAME'])
 
 		# turn wife string ID into a number
 		wifeID = int(''.join(filter(str.isdigit, family["WIFE"])))
 		wife = searchByID(indis, len(indis), 0, wifeID)
+		if not wife:
+			raise Exception("Wife ID must exist.")
+		else:
+			family_names.append(wife['NAME'])
 
 		family["HUSB NAME"] = husb["NAME"]
 		family["WIFE NAME"] = wife["NAME"]
@@ -213,13 +236,21 @@ def init():
 			for childStringID in family["CHIL"]:
 				childID = int(''.join(filter(str.isdigit, childStringID)))
 				child = searchByID(indis, len(indis), 0, childID)
+				if not child:
+					raise Exception("Wife ID must exist.")
+				else:
+					family_names.append(child['NAME'])
+	
 				childBirthdate = child["BIRT"]
+
 
 				if not wife["ALIVE"] and not birthBeforeMomDeath(childBirthdate, wife["DEAT"]):
 					errors.append("ERROR: FAMILY: US09: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " after DEAT of mother on " + wife["DEAT"].strftime("%x") + ".")
 
 				if not husb["ALIVE"] and not birthBeforeDadDeath(childBirthdate, husb["DEAT"]):
 					errors.append("ERROR: FAMILY: US09: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " 9 months after DEAT of father on " + husb["DEAT"].strftime("%x") + ".")
+		
+		Family_names(family_names)
 
 	
 	# write table results to a new file
