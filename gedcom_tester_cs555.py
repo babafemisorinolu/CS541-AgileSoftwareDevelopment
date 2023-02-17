@@ -173,6 +173,12 @@ def init():
 
 	for person in indis:
 		person = getAge(currDate, person)
+		#US03 - Birth before death
+		birth = person["BIRT"]
+		if 'DEAT' in person:
+			death = person["DEAT"]
+			if birthBeforeDeath(birth, death):
+				errors.append("Birth should occur before death of an individual")
 
 	for family in fams:
 		# turn husband string ID into a number
@@ -185,7 +191,15 @@ def init():
 
 		family["HUSB NAME"] = husb["NAME"]
 		family["WIFE NAME"] = wife["NAME"]
-
+        
+		# US10 - Marriage after 14
+		hbirth = husb["BIRT"]
+		wbirth = wife["BIRT"]
+		marr = family["MARR"]
+		if marriageAfter14(hbirth, marr):
+			errors.append("Marriage should be at least 14 years after birth of husband")
+		if marriageAfter14(wbirth, marr):
+			errors.append("Marriage should be at least 14 years after birth of wife")
 		# US09 - Birth before death of parents
 		if "CHIL" in family:
 			for childStringID in family["CHIL"]:

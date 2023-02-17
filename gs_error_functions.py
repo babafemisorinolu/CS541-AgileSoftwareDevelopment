@@ -19,3 +19,10 @@ def birthBeforeDadDeath(birth, dadDeath):
 	return dadDeath.year - birth.year - ((dadDeath.month, dadDeath.day) < (birth.month, birth.day)) >= 0
 
 
+#US03 - Birth before Death
+def birthBeforeDeath(birth, death):
+    return birth.year - death.year - ((death.month, death.day) < (birth.month, birth.day)) >= 0
+
+#US10 - Marriage after 14
+def marriageAfter14(bdate, mdate):
+    return bdate.year - mdate.year - ((mdate.month, mdate.day) < (bdate.month, bdate.day)) > 14
