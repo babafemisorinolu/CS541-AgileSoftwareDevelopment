@@ -171,8 +171,16 @@ def init():
 	indis.sort(key=lambda info: int(''.join(filter(str.isdigit, info["ID"]))))
 	fams.sort(key=lambda info: int(''.join(filter(str.isdigit, info["ID"]))))
 
+	#US31 - List living single
+	livingSingles= (listLivingSingle(indis,currDate)) # US31
+
 	for person in indis:
 		person = getAge(currDate, person)
+		# print(person)
+		# US07 - Less then 150 years old
+		if AgeGreaterThan150(person):
+			errors.append("ERROR: INDIVIDUAL: US07: " + person["NAME"] + " age (" + str(person["AGE"]) + ") should be less than 150 years old ")			
+		
 		#US03 - Birth before death
 		birth = person["BIRT"]
 		if 'DEAT' in person:
@@ -222,6 +230,11 @@ def init():
 	outfile.write(tabulate(fams, headers = "keys", tablefmt="github"))
 	outfile.write('\n\n')
 
+	outfile.write('Living people over 30 who have never been married\n')
+	outfile.write(tabulate(livingSingles, headers = "keys", tablefmt="github"))
+	outfile.write('\n\n')
+
+	outfile.write('ERRORS\n')	
 	for error in errors:
 		outfile.write(error)
 		outfile.write('\n')	

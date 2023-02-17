@@ -70,3 +70,22 @@ def searchByID(array, high, low, target):
 		return searchByID(array, high, mid+1, target)
 	return array[mid]
 
+#List all living people over 30 who have never been married in a GEDCOM file
+def listLivingSingle(indis,currDate):
+	livingSingles=[]
+	for person in indis:
+		person = getAge(currDate, person)
+		if("FAMS" not in person):
+			# print("person[AGE]>30",person["AGE"], int(person["AGE"])>30)
+			if (person["ALIVE"]==True and person["AGE"]>30):
+				# print(person)
+				livingSingles.append(person)
+	return livingSingles
+
+#Death should be less than 150 years after birth for dead people, 
+#and current date should be less than 150 years after birth for all living people
+def AgeGreaterThan150(person):
+	if (person["AGE"]>=150):
+		return True
+	return False	
+	
