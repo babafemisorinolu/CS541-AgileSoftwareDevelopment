@@ -76,7 +76,7 @@ def readLine(fileLine):
 					indis.append(indi.info) # add object dict to list of individuals
 					indis_id.append(args[1])
 				else:
-					raise Exception("Individual IDs are duplicate. Please provide correct ID.")
+					errors.append("ERROR: INDIVIDUAL: US22 : Individual IDs are duplicate. Please provide correct ID.")
 			else:
 				#check whether the family ID is unique or not
 				if args[1] not in fams_id:
@@ -84,7 +84,7 @@ def readLine(fileLine):
 					fams.append(fam.info) # add object dict to list of families
 					fams_id.append(args[1])
 				else:
-					raise Exception("Family IDs are duplicate. Please provide correct ID.")
+					errors.append("ERROR: INDIVIDUAL: US22 : Family IDs are duplicate. Please provide correct ID.")
 
 		# valid tag check (must be a tag specified in valid tags)
 		else:
@@ -250,7 +250,10 @@ def init():
 				if not husb["ALIVE"] and not birthBeforeDadDeath(childBirthdate, husb["DEAT"]):
 					errors.append("ERROR: FAMILY: US09: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " 9 months after DEAT of father on " + husb["DEAT"].strftime("%x") + ".")
 		
-		Family_names(family_names)
+		result = Family_names(family_names)
+		if result :
+			errors.append("ERROR: INDIVIDUAL: US25 : First names of individuals in the family cannot be same.")
+			
 
 	
 	# write table results to a new file

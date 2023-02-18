@@ -8,7 +8,7 @@
 | @I5@  | Adelino /Souza/         | M     | 1944-10-07 | ['@F2@']         |    78 | True    |        |            |
 | @I7@  | Schneider /Souza/       | F     | 1985-12-18 | ['@F4@']         |    37 | True    | @F2@   |            |
 | @I8@  | Anthony /Grill/         | M     | 1983-03-04 | ['@F4@']         |    39 | True    |        |            |
-| @I9@  | Antonio /Grill/         | M     | 2023-06-05 |                  |    -1 | True    | @F4@   |            |
+| @I9@  | Anthony /Grill/         | M     | 2023-06-05 |                  |    -1 | True    | @F4@   |            |
 | @I10@ | Nathaniel /Grill/       | M     | 2017-06-05 |                  |     5 | True    | @F4@   |            |
 | @I11@ | Sebastian /Sales/       | M     | 1919-09-15 | ['@F12@']        |    99 | False   |        | 2019-02-07 |
 | @I13@ | Soraia /Sales/          | F     | 1964-10-09 | ['@F5@', '@F0@'] |    58 | True    | @F12@  |            |
@@ -19,7 +19,6 @@
 | @I19@ | Michael /Johnson/       | M     | 1996-09-19 | ['@F7@']         |    26 | True    |        |            |
 | @I20@ | Matt /Johnson/          | M     | 2020-05-21 |                  |     2 | True    | @F7@   |            |
 | @I22@ | Gabriel /Souza/         | M     | 2000-09-12 |                  |    22 | True    | @F27@  |            |
-| @I23@ | Dorcas /Souza/          | F     | 1990-06-12 |                  |    32 | True    | @F27@  |            |
 | @I47@ | Elza /Teixeira/         | F     | 1865-03-01 | ['@F12@']        |   152 | False   |        | 2017-10-22 |
 
 | ID    | HUSB   | WIFE   | CHIL               | MARR       | HUSB NAME             | WIFE NAME             | DIV        |
@@ -33,12 +32,12 @@
 | @F27@ | @I2@   | @I3@   | ['@I22@', '@I4@']  | 2003-07-01 | Shester /Souza/       | Roseli /Souza/        |            |
 
 Living people over 30 who have never been married
-| ID    | NAME           | SEX   | BIRT       | FAMC   |   AGE | ALIVE   |
-|-------|----------------|-------|------------|--------|-------|---------|
-| @I23@ | Dorcas /Souza/ | F     | 1990-06-12 | @F27@  |    32 | True    |
+
 
 ERRORS
+ERROR: INDIVIDUAL: US22 : Individual IDs are duplicate. Please provide correct ID.
 ERROR: INDIVIDUAL: US01: @I9@: BIRT 06/05/23 occurs in the future.
 ERROR: INDIVIDUAL: US07: Elza /Teixeira/ age (152) should be less than 150 years old 
 ERROR: FAMILY: US09: @F0@: Child @I16@: BIRT 12/02/97 9 months after DEAT of father on 02/27/96.
+ERROR: INDIVIDUAL: US25 : First names of individuals in the family cannot be same.
 ERROR: FAMILY: US09: @F7@: Child @I20@: BIRT 05/21/20 after DEAT of mother on 06/20/19.

@@ -2,7 +2,7 @@
 0 NOTE Gabriel Souza - CS 555-E
 
 0 NOTE Four Generations of my (imaginary) family
-0 @I23@ INDI
+0 @I22@ INDI
 1 NAME Dorcas /Souza/
 1 SEX F
 1 BIRT
@@ -60,7 +60,7 @@
 2 DATE 4 MAR 1983
 1 FAMS @F4@
 0 @I9@ INDI
-1 NAME Antonio /Grill/
+1 NAME Anthony /Grill/
 1 SEX M
 1 BIRT
 2 DATE 5 JUN 2023
