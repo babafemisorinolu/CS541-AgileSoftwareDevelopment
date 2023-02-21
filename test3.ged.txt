@@ -6,6 +6,7 @@
 | @I3@  | Roseli /Souza/          | F     | 1975-01-25 | ['@F27@']        |    48 | True    |        |            |
 | @I4@  | Sienna /Souza/          | F     | 2013-05-13 |                  |     9 | True    | @F27@  |            |
 | @I5@  | Adelino /Souza/         | M     | 1944-10-07 | ['@F2@']         |    78 | True    |        |            |
+| @I6@  | Barry /Souza-JNR/       | M     | 1979-07-19 |                  |    43 | True    | @F2@   |            |
 | @I7@  | Schneider /Souza/       | F     | 1985-12-18 | ['@F4@']         |    37 | True    | @F2@   |            |
 | @I8@  | Anthony /Grill/         | M     | 1983-03-04 | ['@F4@']         |    39 | True    |        |            |
 | @I9@  | Anthony /Grill/         | M     | 2023-06-05 |                  |    -1 | True    | @F4@   |            |
@@ -32,11 +33,14 @@
 | @F27@ | @I2@   | @I3@   | ['@I22@', '@I4@']  | 2003-07-01 | Shester /Souza/       | Roseli /Souza/        |            |
 
 Living people over 30 who have never been married
-
+| ID   | NAME              | SEX   | BIRT       | FAMC   |   AGE | ALIVE   |
+|------|-------------------|-------|------------|--------|-------|---------|
+| @I6@ | Barry /Souza-JNR/ | M     | 1979-07-19 | @F2@   |    43 | True    |
 
 ERRORS
 ERROR: INDIVIDUAL: US22 : Individual IDs are duplicate. Please provide correct ID.
 ERROR: INDIVIDUAL: US01: @I9@: BIRT 06/05/23 occurs in the future.
+ERROR: INDIVIDUAL: US16: Shester /Souza/ and Barry /Souza-JNR/ are male members of a family and should have the same last name!
 ERROR: INDIVIDUAL: US07: Elza /Teixeira/ age (152) should be less than 150 years old 
 ERROR: FAMILY: US09: @F0@: Child @I16@: BIRT 12/02/97 9 months after DEAT of father on 02/27/96.
 ERROR: INDIVIDUAL: US25 : First names of individuals in the family cannot be same.

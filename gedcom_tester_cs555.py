@@ -184,9 +184,12 @@ def init():
 	indis.sort(key=lambda info: int(''.join(filter(str.isdigit, info["ID"]))))
 	fams.sort(key=lambda info: int(''.join(filter(str.isdigit, info["ID"]))))
 
+
 	#US31 - List living single
 	livingSingles= (listLivingSingle(indis,currDate)) # US31
-
+	err=verifyMaleMembersSurname(indis)
+	err2=verifySiblingsCannotMarry(fams,indis)
+	errors.extend(err)
 	for person in indis:
 		person = getAge(currDate, person)
 		# print(person)
