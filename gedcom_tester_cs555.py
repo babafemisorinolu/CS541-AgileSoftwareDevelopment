@@ -201,10 +201,21 @@ def init():
 		
 		#US03 - Birth before death
 		birth = person["BIRT"]
+
 		if 'DEAT' in person:
 			death = person["DEAT"]
 			if birthBeforeDeath(birth, death):
 				errors.append("Birth should occur before death of an individual")
+
+		# US02 - Birth before Marriage
+		if 'FAMS' in person:
+			for family in person['FAMS']:
+
+				famID = int(''.join(filter(str.isdigit, family)))
+				marriageDate = searchByID(fams, len(fams)-1, 0, famID)['MARR']
+
+				if birthBeforeMarriage(birth, marriageDate):
+					errors.append("ERROR: INDIVIDUAL: US02: " + person["NAME"] + " birth " + birth.strftime("%x") + " should be before marriage " + marriageDate.strftime("%x") + ".")			
 
 	for family in fams:
 		#names of all the individuals in the family
