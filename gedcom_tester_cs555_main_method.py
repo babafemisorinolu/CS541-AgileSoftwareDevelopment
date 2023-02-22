@@ -22,32 +22,11 @@ class Individual:
 	def __init__(self, id):
 		self.info = {'ID': id} # dict to save individual information
 
+
 # creates a new "family" object
 class Family:
 	def __init__(self, id):
 		self.info = {'ID': id} # dict to save family information
-
-# all the valid tags for the project, along with their corresponding levels
-validTags = {
-	'0': [{'HEAD', 'TRLR', 'NOTE'}, {'INDI', 'FAM'}],
-	'1': [{'NAME', 'SEX', 'BIRT', 'DEAT', 'FAMC', 'FAMS'}, {'MARR', 'HUSB', 'WIFE', 'CHIL', 'DIV'}],
-	'2': {'DATE'},
-};
-
-# list of all individuals
-indis = []
-# list of all families
-fams = []
-#list of individual ids
-indis_id = []
-#list of family ids
-fams_id = []
-
-# list of all GEDCOM errors in the source file
-errors = []
-
-# today's date for error checking and age calculation
-currDate = date.today()
 
 # read and evalute if each new line is in valid GEDCOM format, then populate individual and family arrays
 def readLine(fileLine):
@@ -70,21 +49,11 @@ def readLine(fileLine):
 		# individual and family id tags have a different format
 		elif args[2] in validTags[args[0]][1]:
 			if args[2] == 'INDI':
-				#US-22 Unique IDs
-				if args[1] not in indis_id: # check whether the individual IDs are unique or not
-					indi = Individual(args[1]) # creates new individual object with id specified by args[1]
-					indis.append(indi.info) # add object dict to list of individuals
-					indis_id.append(args[1])
-				else:
-					errors.append("ERROR: INDIVIDUAL: US22 : Individual IDs are duplicate. Please provide correct ID.")
+				indi = Individual(args[1]) # creates new individual object with id specified by args[1]
+				indis.append(indi.info) # add object dict to list of individuals
 			else:
-				#check whether the family ID is unique or not
-				if args[1] not in fams_id:
-					fam = Family(args[1]) # creates new family object with id specified by args[1]
-					fams.append(fam.info) # add object dict to list of families
-					fams_id.append(args[1])
-				else:
-					errors.append("ERROR: INDIVIDUAL: US22 : Family IDs are duplicate. Please provide correct ID.")
+				fam = Family(args[1]) # creates new family object with id specified by args[1]
+				fams.append(fam.info) # add object dict to list of families
 
 		# valid tag check (must be a tag specified in valid tags)
 		else:
@@ -165,8 +134,77 @@ def readLine(fileLine):
 
 	return
 
+
+# executable code
+def main(indis, fams, errors, validTags, currDate):
+	# sort each list by their ID nums
+	indis.sort(key=lambda info: int(''.join(filter(str.isdigit, info["ID"]))))
+	fams.sort(key=lambda info: int(''.join(filter(str.isdigit, info["ID"]))))
+
+	for person in indis:
+		person = getAge(currDate, person)
+
+	for family in fams:
+		# turn husband string ID into a number
+		husbID = int(''.join(filter(str.isdigit, family["HUSB"])))
+		husb = searchByID(indis, len(indis), 0, husbID)
+
+		# turn wife string ID into a number
+		wifeID = int(''.join(filter(str.isdigit, family["WIFE"])))
+		wife = searchByID(indis, len(indis), 0, wifeID)
+
+		family["HUSB NAME"] = husb["NAME"]
+		family["WIFE NAME"] = wife["NAME"]
+
+		# US09 - Birth before death of parents
+		if "CHIL" in family:
+			for childStringID in family["CHIL"]:
+				childID = int(''.join(filter(str.isdigit, childStringID)))
+				child = searchByID(indis, len(indis), 0, childID)
+				childBirthdate = child["BIRT"]
+
+				if not wife["ALIVE"] and not birthBeforeMomDeath(childBirthdate, wife["DEAT"]):
+					errors.append("ERROR: FAMILY: US09: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " after DEAT of mother on " + wife["DEAT"].strftime("%x") + ".")
+
+				if not husb["ALIVE"] and not birthBeforeDadDeath(childBirthdate, husb["DEAT"]):
+					errors.append("ERROR: FAMILY: US09: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " 9 months after DEAT of father on " + husb["DEAT"].strftime("%x") + ".")
+
+	
+	# write table results to a new file
+    # outfile = open(filename + ".txt", "w")
+
+	result = tabulate(indis, headers = "keys", tablefmt="github")
+	result += '\n\n'
+	result += tabulate(fams, headers = "keys", tablefmt="github")
+	result += '\n\n'
+
+	for error in errors:
+		result += error
+		result += '\n'
+
+	return result
+
 # main method
-def init():
+if __name__ == "__main__":
+	# list of all individuals
+	indis = []
+
+	# list of all families
+	fams = []
+
+	# list of all GEDCOM errors in the source file
+	errors = []
+
+	# today's date for error checking and age calculation
+	currDate = date.today()
+	
+	# all the valid tags for the project, along with their corresponding levels
+	validTags = {
+		'0': [{'HEAD', 'TRLR', 'NOTE'}, {'INDI', 'FAM'}],
+		'1': [{'NAME', 'SEX', 'BIRT', 'DEAT', 'FAMC', 'FAMS'}, {'MARR', 'HUSB', 'WIFE', 'CHIL', 'DIV'}],
+		'2': {'DATE'},
+	};
+
 	try:
 		filename = input("Please enter the name of the file (defaults to test3.ged if no file given): ")
 		if(filename==""):
@@ -180,118 +218,9 @@ def init():
 		''');
 		sys.exit();
 
-	# sort each list by their ID nums
-	indis.sort(key=lambda info: int(''.join(filter(str.isdigit, info["ID"]))))
-	fams.sort(key=lambda info: int(''.join(filter(str.isdigit, info["ID"]))))
-
-
-	#US31 - List living single
-	livingSingles= (listLivingSingle(indis,currDate)) # US31
-	err=verifyMaleMembersSurname(indis)
-	err2=verifySiblingsCannotMarry(fams,indis)
-	errors.extend(err)
-	errors.extend(err2)
-	
-	for person in indis:
-		person = getAge(currDate, person)
-		# print(person)
-		# US07 - Less then 150 years old
-		if AgeGreaterThan150(person):
-			errors.append("ERROR: INDIVIDUAL: US07: " + person["NAME"] + " age (" + str(person["AGE"]) + ") should be less than 150 years old ")			
+	result = main(indis, fams, errors, validTags, currDate)
 		
-		#US03 - Birth before death
-		birth = person["BIRT"]
-
-		if 'DEAT' in person:
-			death = person["DEAT"]
-			if birthBeforeDeath(birth, death):
-				errors.append("Birth should occur before death of an individual")
-
-		# US02 - Birth before Marriage
-		if 'FAMS' in person:
-			for family in person['FAMS']:
-
-				famID = int(''.join(filter(str.isdigit, family)))
-				marriageDate = searchByID(fams, len(fams)-1, 0, famID)['MARR']
-
-				if birthBeforeMarriage(birth, marriageDate):
-					errors.append("ERROR: INDIVIDUAL: US02: " + person["NAME"] + " birth " + birth.strftime("%x") + " should be before marriage " + marriageDate.strftime("%x") + ".")			
-
-	for family in fams:
-		#names of all the individuals in the family
-		family_names = []
-		# turn husband string ID into a number
-		husbID = int(''.join(filter(str.isdigit, family["HUSB"])))
-		husb = searchByID(indis, len(indis), 0, husbID)
-		if not husb:
-			raise Exception("Husband ID must exist.")
-		else:
-			family_names.append(husb['NAME'])
-
-		# turn wife string ID into a number
-		wifeID = int(''.join(filter(str.isdigit, family["WIFE"])))
-		wife = searchByID(indis, len(indis), 0, wifeID)
-		if not wife:
-			raise Exception("Wife ID must exist.")
-		else:
-			family_names.append(wife['NAME'])
-
-		family["HUSB NAME"] = husb["NAME"]
-		family["WIFE NAME"] = wife["NAME"]
-        
-		# US10 - Marriage after 14
-		hbirth = husb["BIRT"]
-		wbirth = wife["BIRT"]
-		marr = family["MARR"]
-		if marriageAfter14(hbirth, marr):
-			errors.append("Marriage should be at least 14 years after birth of husband")
-		if marriageAfter14(wbirth, marr):
-			errors.append("Marriage should be at least 14 years after birth of wife")
-		# US09 - Birth before death of parents
-		if "CHIL" in family:
-			for childStringID in family["CHIL"]:
-				childID = int(''.join(filter(str.isdigit, childStringID)))
-				child = searchByID(indis, len(indis), 0, childID)
-				if not child:
-					raise Exception("Wife ID must exist.")
-				else:
-					family_names.append(child['NAME'])
-	
-				childBirthdate = child["BIRT"]
-
-
-				if not wife["ALIVE"] and not birthBeforeMomDeath(childBirthdate, wife["DEAT"]):
-					errors.append("ERROR: FAMILY: US09: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " after DEAT of mother on " + wife["DEAT"].strftime("%x") + ".")
-
-				if not husb["ALIVE"] and not birthBeforeDadDeath(childBirthdate, husb["DEAT"]):
-					errors.append("ERROR: FAMILY: US09: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " 9 months after DEAT of father on " + husb["DEAT"].strftime("%x") + ".")
-		
-		result = Family_names(family_names)
-		if result :
-			errors.append("ERROR: INDIVIDUAL: US25 : First names of individuals in the family cannot be same.")
-			
-
-	
 	# write table results to a new file
 	outfile = open(filename + ".txt", "w")
-
-	outfile.write(tabulate(indis, headers = "keys", tablefmt="github"))
-	outfile.write('\n\n')
-	outfile.write(tabulate(fams, headers = "keys", tablefmt="github"))
-	outfile.write('\n\n')
-
-	outfile.write('Living people over 30 who have never been married\n')
-	outfile.write(tabulate(livingSingles, headers = "keys", tablefmt="github"))
-	outfile.write('\n\n')
-
-	outfile.write('ERRORS\n')	
-	for error in errors:
-		outfile.write(error)
-		outfile.write('\n')	
-
+	outfile.write(result)
 	outfile.close()
-
-
-init()
-sys.exit();
-
