@@ -190,6 +190,8 @@ def init():
 	err=verifyMaleMembersSurname(indis)
 	err2=verifySiblingsCannotMarry(fams,indis)
 	errors.extend(err)
+	errors.extend(err2)
+	
 	for person in indis:
 		person = getAge(currDate, person)
 		# print(person)

@@ -20,27 +20,30 @@
 | @I19@ | Michael /Johnson/       | M     | 1996-09-19 | ['@F7@']         |    26 | True    |        |            |
 | @I20@ | Matt /Johnson/          | M     | 2020-05-21 |                  |     2 | True    | @F7@   |            |
 | @I22@ | Gabriel /Souza/         | M     | 2000-09-12 |                  |    22 | True    | @F27@  |            |
+| @I23@ | Dorcas /Souza/          | F     | 1990-06-12 |                  |    32 | True    | @F27@  |            |
 | @I47@ | Elza /Teixeira/         | F     | 1865-03-01 | ['@F12@']        |   152 | False   |        | 2017-10-22 |
 
-| ID    | HUSB   | WIFE   | CHIL               | MARR       | HUSB NAME             | WIFE NAME             | DIV        |
-|-------|--------|--------|--------------------|------------|-----------------------|-----------------------|------------|
-| @F0@  | @I15@  | @I13@  | ['@I16@', '@I18@'] | 1994-09-05 | Matt /Jones/          | Soraia /Sales/        |            |
-| @F2@  | @I5@   | @I1@   | ['@I2@', '@I7@']   | 1963-02-28 | Adelino /Souza/       | Isis /Sales/          | 2014-04-10 |
-| @F4@  | @I8@   | @I7@   | ['@I9@', '@I10@']  | 2016-07-15 | Anthony /Grill/       | Schneider /Souza/     |            |
-| @F5@  | @I0@   | @I13@  | ['@I17@']          | 2021-04-05 | Sebastian /Fernandez/ | Soraia /Sales/        |            |
-| @F7@  | @I19@  | @I18@  | ['@I20@']          | 2022-06-23 | Michael /Johnson/     | Natalie /Sales-Jones/ |            |
-| @F12@ | @I11@  | @I47@  | ['@I1@', '@I13@']  | 1942-12-02 | Sebastian /Sales/     | Elza /Teixeira/       |            |
-| @F27@ | @I2@   | @I3@   | ['@I22@', '@I4@']  | 2003-07-01 | Shester /Souza/       | Roseli /Souza/        |            |
+| ID    | HUSB   | WIFE   | CHIL                       | MARR       | HUSB NAME             | WIFE NAME             | DIV        |
+|-------|--------|--------|----------------------------|------------|-----------------------|-----------------------|------------|
+| @F0@  | @I15@  | @I13@  | ['@I16@', '@I18@']         | 1994-09-05 | Matt /Jones/          | Soraia /Sales/        |            |
+| @F2@  | @I5@   | @I1@   | ['@I2@', '@I7@']           | 1963-02-28 | Adelino /Souza/       | Isis /Sales/          | 2014-04-10 |
+| @F4@  | @I8@   | @I7@   | ['@I9@', '@I10@']          | 2016-07-15 | Anthony /Grill/       | Schneider /Souza/     |            |
+| @F5@  | @I0@   | @I13@  | ['@I17@']                  | 2021-04-05 | Sebastian /Fernandez/ | Soraia /Sales/        |            |
+| @F7@  | @I19@  | @I18@  | ['@I20@']                  | 2022-06-23 | Michael /Johnson/     | Natalie /Sales-Jones/ |            |
+| @F12@ | @I11@  | @I47@  | ['@I1@', '@I13@']          | 1942-12-02 | Sebastian /Sales/     | Elza /Teixeira/       |            |
+| @F27@ | @I2@   | @I3@   | ['@I22@', '@I23@', '@I4@'] | 2003-07-01 | Shester /Souza/       | Roseli /Souza/        |            |
+| @F28@ | @I22@  | @I23@  |                            | 2023-02-21 | Gabriel /Souza/       | Dorcas /Souza/        |            |
 
 Living people over 30 who have never been married
-| ID   | NAME              | SEX   | BIRT       | FAMC   |   AGE | ALIVE   |
-|------|-------------------|-------|------------|--------|-------|---------|
-| @I6@ | Barry /Souza-JNR/ | M     | 1979-07-19 | @F2@   |    43 | True    |
+| ID    | NAME              | SEX   | BIRT       | FAMC   |   AGE | ALIVE   |
+|-------|-------------------|-------|------------|--------|-------|---------|
+| @I6@  | Barry /Souza-JNR/ | M     | 1979-07-19 | @F2@   |    43 | True    |
+| @I23@ | Dorcas /Souza/    | F     | 1990-06-12 | @F27@  |    32 | True    |
 
 ERRORS
-ERROR: INDIVIDUAL: US22 : Individual IDs are duplicate. Please provide correct ID.
 ERROR: INDIVIDUAL: US01: @I9@: BIRT 06/05/23 occurs in the future.
 ERROR: INDIVIDUAL: US16: Shester /Souza/ and Barry /Souza-JNR/ are male members of a family and should have the same last name!
+ERROR: INDIVIDUAL: US18: Gabriel /Souza/ and Dorcas /Souza/ are siblings and should not marry one another!
 ERROR: INDIVIDUAL: US07: Elza /Teixeira/ age (152) should be less than 150 years old 
 ERROR: FAMILY: US09: @F0@: Child @I16@: BIRT 12/02/97 9 months after DEAT of father on 02/27/96.
 ERROR: INDIVIDUAL: US25 : First names of individuals in the family cannot be same.

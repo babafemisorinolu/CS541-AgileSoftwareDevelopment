@@ -158,9 +158,22 @@ def verifySiblingsCannotMarry(family, individuals):
          wife=nam["WIFE"]
          husb_details=next(item for item in individuals if item["ID"] == husb)
          wife_details=next(item for item in individuals if item["ID"] == wife)
-         print(wife,husb)
-         print(husb_details)
-         print(wife_details)
-         print("*"*20,"\n")
-         #check if they are related from individal dict
+        #  print(wife,husb)
+        
+         
+         if ("FAMC" in husb_details):
+             h_fid=husb_details["FAMC"]
+         else:
+          h_fid="husb"
+
+         if ("FAMC" in wife_details):
+             w_fid=wife_details["FAMC"]
+         else:
+            w_fid="wife"
+         
+         if(h_fid==w_fid):
+            errors.append("ERROR: INDIVIDUAL: US18: " + husb_details["NAME"] + " and " + wife_details["NAME"] + " are siblings and should not marry one another!")			
+             
+        #  print("*"*20,"\n")
+    #  print(errors)   
      return errors;
