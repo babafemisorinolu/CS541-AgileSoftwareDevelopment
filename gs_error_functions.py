@@ -18,7 +18,6 @@ def birthBeforeDadDeath(birth, dadDeath):
 	dadDeath -= timedelta(weeks = 40)
 	return dadDeath.year - birth.year - ((dadDeath.month, dadDeath.day) < (birth.month, birth.day)) >= 0
 
-
 #US03 - Birth before Death
 def birthBeforeDeath(birth, death):
     return birth.year - death.year - ((death.month, death.day) < (birth.month, birth.day)) >= 0
@@ -26,3 +25,7 @@ def birthBeforeDeath(birth, death):
 #US10 - Marriage after 14
 def marriageAfter14(bdate, mdate):
     return bdate.year - mdate.year - ((mdate.month, mdate.day) < (bdate.month, bdate.day)) > 14
+
+# US02 - Birth before marriage
+def birthBeforeMarriage(birth, marriage):
+	return birth.year - marriage.year - ((birth.month, birth.day) < (marriage.month, marriage.day)) >= 0
