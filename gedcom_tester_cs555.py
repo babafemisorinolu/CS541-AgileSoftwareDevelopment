@@ -238,16 +238,15 @@ def init():
 
 		family["HUSB NAME"] = husb["NAME"]
 		family["WIFE NAME"] = wife["NAME"]
-
+		
 		# US05 - Marriage before death
+		marr = family["MARR"]
 		if 'DEAT' in husb:
 			hdeath = husb["DEAT"]
-			marr = family["MARR"]
 			if marriageBeforeDeath(marr, hdeath):
 					errors.append("ERROR: FAMILY: US05: " + family["ID"] + " marriage " + marr.strftime("%x") + " should be before death " + hdeath.strftime("%x") + ".")
 		if 'DEAT' in wife:
 			wdeath = wife["DEAT"]
-			marr = family["MARR"]
 			if marriageBeforeDeath(marr, wdeath):
 					errors.append("ERROR: FAMILY: US05: " + family["ID"] + " marriage " + marr.strftime("%x") + " should be before death " + wdeath.strftime("%x") + ".")
 
@@ -255,11 +254,12 @@ def init():
 		# US10 - Marriage after 14
 		hbirth = husb["BIRT"]
 		wbirth = wife["BIRT"]
-		marr = family["MARR"]
+		
 		if marriageAfter14(hbirth, marr):
 			errors.append("Marriage should be at least 14 years after birth of husband")
 		if marriageAfter14(wbirth, marr):
 			errors.append("Marriage should be at least 14 years after birth of wife")
+ 
 		# US09 - Birth before death of parents
 		if "CHIL" in family:
 			for childStringID in family["CHIL"]:
@@ -278,7 +278,11 @@ def init():
 
 				if not husb["ALIVE"] and not birthBeforeDadDeath(childBirthdate, husb["DEAT"]):
 					errors.append("ERROR: FAMILY: US09: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " 9 months after DEAT of father on " + husb["DEAT"].strftime("%x") + ".")
-		
+
+				#US08 - Birth before the marriage of parents(and no more than 9 months after their divorce)
+				if birthBeforeMarriageofParents(marr, childBirthdate):
+					errors.append("ERROR : FAMILY: US08: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " should be after marriage " + marr.strftime("%x") + ".")
+
 		result = Family_names(family_names)
 		if result :
 			errors.append("ERROR: INDIVIDUAL: US25 : First names of individuals in the family cannot be same.")
