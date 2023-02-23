@@ -31,5 +31,6 @@ def birthBeforeMarriage(birth, marriage):
 	return birth.year - marriage.year - ((birth.month, birth.day) < (marriage.month, marriage.day)) >= 0
 
 # US05 - Marriage before death
-def marriageBeforeDeath(death,marriage):
-	return death.year - marriage.year - ((death.month, death.day) < (marriage.month, marriage.day)) >= 0
+def marriageBeforeDeath(marriage,death):
+	return marriage.year - death.year - ((marriage.month, marriage.day) < (death.month, death.day)) >= 0
+

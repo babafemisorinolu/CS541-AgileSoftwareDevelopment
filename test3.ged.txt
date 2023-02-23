@@ -11,7 +11,7 @@
 | @I8@  | Anthony /Grill/         | M     | 1983-03-04 | ['@F4@']         |    39 | True    |        |            |
 | @I9@  | Anthony /Grill/         | M     | 2023-06-05 |                  |    -1 | True    | @F4@   |            |
 | @I10@ | Nathaniel /Grill/       | M     | 2017-06-05 |                  |     5 | True    | @F4@   |            |
-| @I11@ | Sebastian /Sales/       | M     | 1919-09-15 | ['@F12@']        |    21 | False   |        | 1941-02-07 |
+| @I11@ | Sebastian /Sales/       | M     | 1919-09-15 | ['@F12@']        |    99 | False   |        | 2019-02-07 |
 | @I13@ | Soraia /Sales/          | F     | 1964-10-09 | ['@F5@', '@F0@'] |    58 | True    | @F12@  |            |
 | @I15@ | Matt /Jones/            | M     | 1962-05-07 | ['@F0@']         |    33 | False   |        | 1996-02-27 |
 | @I16@ | Stephanie /Sales-Jones/ | F     | 1997-12-02 |                  |    25 | True    | @F0@   |            |
@@ -21,7 +21,7 @@
 | @I20@ | Matt /Johnson/          | M     | 2020-05-21 |                  |     2 | True    | @F7@   |            |
 | @I22@ | Gabriel /Souza/         | M     | 2000-09-12 |                  |    22 | True    | @F27@  |            |
 | @I23@ | Dorcas /Souza/          | F     | 1990-06-12 |                  |    32 | True    | @F27@  |            |
-| @I47@ | Elza /Teixeira/         | F     | 1865-03-01 | ['@F12@']        |    76 | False   |        | 1941-10-22 |
+| @I47@ | Elza /Teixeira/         | F     | 1865-03-01 | ['@F12@']        |   152 | False   |        | 2017-10-22 |
 
 | ID    | HUSB   | WIFE   | CHIL                       | MARR       | HUSB NAME             | WIFE NAME             | DIV        |
 |-------|--------|--------|----------------------------|------------|-----------------------|-----------------------|------------|
@@ -44,11 +44,8 @@ ERRORS
 ERROR: INDIVIDUAL: US01: @I9@: BIRT 06/05/23 occurs in the future.
 ERROR: INDIVIDUAL: US16: Shester /Souza/ and Barry /Souza-JNR/ are male members of a family and should have the same last name!
 ERROR: INDIVIDUAL: US18: Gabriel /Souza/ and Dorcas /Souza/ are siblings and should not marry one another!
-ERROR: FAMILY: US05: @F0@ marriage 09/05/94 should be before death 02/27/96.
+ERROR: INDIVIDUAL: US07: Elza /Teixeira/ age (152) should be less than 150 years old 
 ERROR: FAMILY: US09: @F0@: Child @I16@: BIRT 12/02/97 9 months after DEAT of father on 02/27/96.
 ERROR: INDIVIDUAL: US25 : First names of individuals in the family cannot be same.
+ERROR: FAMILY: US05: @F7@ marriage 06/23/22 should be before death 06/20/19.
 ERROR: FAMILY: US09: @F7@: Child @I20@: BIRT 05/21/20 after DEAT of mother on 06/20/19.
-ERROR: FAMILY: US09: @F12@: Child @I1@: BIRT 06/12/46 after DEAT of mother on 10/22/41.
-ERROR: FAMILY: US09: @F12@: Child @I1@: BIRT 06/12/46 9 months after DEAT of father on 02/07/41.
-ERROR: FAMILY: US09: @F12@: Child @I13@: BIRT 10/09/64 after DEAT of mother on 10/22/41.
-ERROR: FAMILY: US09: @F12@: Child @I13@: BIRT 10/09/64 9 months after DEAT of father on 02/07/41.
