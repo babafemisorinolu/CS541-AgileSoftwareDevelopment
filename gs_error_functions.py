@@ -34,3 +34,11 @@ def birthBeforeMarriage(birth, marriage):
 def marriageBeforeDeath(marriage,death):
 	return marriage.year - death.year - ((marriage.month, marriage.day) < (death.month, death.day)) >= 0
 
+# US08 - Birth before marriage of parents
+def birthBeforeMarriageofParents(marriage,birthchild):
+	return marriage.year - birthchild.year - ((marriage.month, marriage.day) < (birthchild.month , birthchild.day)) >=  0
+
+def birthbeforeDivorceofParents(childBirthdate, divorce):
+	divorce -= timedelta(weeks = 40)
+	return divorce.year - childBirthdate.year - ((divorce.month, divorce.day) < (childBirthdate.month, childBirthdate.day)) >= 0
+

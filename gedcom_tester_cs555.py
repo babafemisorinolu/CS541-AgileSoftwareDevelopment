@@ -280,8 +280,13 @@ def init():
 					errors.append("ERROR: FAMILY: US09: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " 9 months after DEAT of father on " + husb["DEAT"].strftime("%x") + ".")
 
 				#US08 - Birth before the marriage of parents(and no more than 9 months after their divorce)
-				if birthBeforeMarriageofParents(marr, childBirthdate):
-					errors.append("ERROR : FAMILY: US08: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " should be after marriage " + marr.strftime("%x") + ".")
+				if "DIV" in family:
+					divorce = family["DIV"]
+					if birthbeforeDivorceofParents(divorce, childBirthdate):
+						errors.append("ERROR : FAMILY: US08: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " should be no more than 9 months after the divorce of the parents on " + marr.strftime("%x") + ".")
+				else:		
+					if birthBeforeMarriageofParents(marr, childBirthdate):
+						errors.append("ERROR : FAMILY: US08: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " should be after marriage " + marr.strftime("%x") + ".")
 
 		result = Family_names(family_names)
 		if result :

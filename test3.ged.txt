@@ -46,6 +46,11 @@ ERROR: INDIVIDUAL: US16: Shester /Souza/ and Barry /Souza-JNR/ are male members 
 ERROR: INDIVIDUAL: US18: Gabriel /Souza/ and Dorcas /Souza/ are siblings and should not marry one another!
 ERROR: INDIVIDUAL: US07: Elza /Teixeira/ age (152) should be less than 150 years old 
 ERROR: FAMILY: US09: @F0@: Child @I16@: BIRT 12/02/97 9 months after DEAT of father on 02/27/96.
+ERROR : FAMILY: US08: @F0@: Child @I18@: BIRT 04/30/94 should be after marriage 09/05/94.
 ERROR: INDIVIDUAL: US25 : First names of individuals in the family cannot be same.
+ERROR : FAMILY: US08: @F5@: Child @I17@: BIRT 08/12/13 should be after marriage 04/05/21.
 ERROR: FAMILY: US05: @F7@ marriage 06/23/22 should be before death 06/20/19.
 ERROR: FAMILY: US09: @F7@: Child @I20@: BIRT 05/21/20 after DEAT of mother on 06/20/19.
+ERROR : FAMILY: US08: @F7@: Child @I20@: BIRT 05/21/20 should be after marriage 06/23/22.
+ERROR : FAMILY: US08: @F27@: Child @I22@: BIRT 09/12/00 should be after marriage 07/01/03.
+ERROR : FAMILY: US08: @F27@: Child @I23@: BIRT 06/12/90 should be after marriage 07/01/03.
