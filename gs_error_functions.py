@@ -29,3 +29,19 @@ def marriageAfter14(bdate, mdate):
 # US02 - Birth before marriage
 def birthBeforeMarriage(birth, marriage):
 	return birth.year - marriage.year - ((birth.month, birth.day) < (marriage.month, marriage.day)) >= 0
+
+# US05 - Marriage before death
+def marriageBeforeDeath(marriage,death):
+	return marriage.year - death.year - ((marriage.month, marriage.day) < (death.month, death.day)) >= 0
+
+# US08 - Birth before marriage of parents
+def birthBeforeMarriageofParents(marriage,birthchild):
+	return marriage.year - birthchild.year - ((marriage.month, marriage.day) < (birthchild.month , birthchild.day)) >=  0
+
+def birthbeforeDivorceofParents(childBirthdate, divorce):
+	divorce -= timedelta(weeks = 40)
+	return divorce.year - childBirthdate.year - ((divorce.month, divorce.day) < (childBirthdate.month, childBirthdate.day)) >= 0
+
+# US02 - Birth before marriage
+def birthBeforeMarriage(birth, marriage):
+	return birth.year - marriage.year - ((birth.month, birth.day) < (marriage.month, marriage.day)) >= 0

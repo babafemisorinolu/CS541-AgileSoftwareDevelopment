@@ -31,7 +31,7 @@
 | @F5@  | @I0@   | @I13@  | ['@I17@']                  | 2021-04-05 | Sebastian /Fernandez/ | Soraia /Sales/        |            |
 | @F7@  | @I19@  | @I18@  | ['@I20@']                  | 2022-06-23 | Michael /Johnson/     | Natalie /Sales-Jones/ |            |
 | @F12@ | @I11@  | @I47@  | ['@I1@', '@I13@']          | 1942-12-02 | Sebastian /Sales/     | Elza /Teixeira/       |            |
-| @F27@ | @I2@   | @I3@   | ['@I22@', '@I23@', '@I4@'] | 1945-07-01 | Shester /Souza/       | Roseli /Souza/        |            |
+| @F27@ | @I2@   | @I3@   | ['@I22@', '@I23@', '@I4@'] | 2003-07-01 | Shester /Souza/       | Roseli /Souza/        |            |
 | @F28@ | @I22@  | @I23@  |                            | 2023-02-21 | Gabriel /Souza/       | Dorcas /Souza/        |            |
 
 Living people over 30 who have never been married
@@ -48,7 +48,8 @@ ERROR: INDIVIDUAL: US02: Shester /Souza/ birth 08/09/75 should be before marriag
 ERROR: INDIVIDUAL: US02: Roseli /Souza/ birth 01/25/75 should be before marriage 07/01/45.
 ERROR: INDIVIDUAL: US07: Elza /Teixeira/ age (152) should be less than 150 years old 
 ERROR: FAMILY: US09: @F0@: Child @I16@: BIRT 12/02/97 9 months after DEAT of father on 02/27/96.
+ERROR : FAMILY: US08: @F0@: Child @I18@: BIRT 04/30/94 should be after marriage 09/05/94.
 ERROR: INDIVIDUAL: US25 : First names of individuals in the family cannot be same.
+ERROR : FAMILY: US08: @F5@: Child @I17@: BIRT 08/12/13 should be after marriage 04/05/21.
+ERROR: FAMILY: US05: @F7@ marriage 06/23/22 should be before death 06/20/19.
 ERROR: FAMILY: US09: @F7@: Child @I20@: BIRT 05/21/20 after DEAT of mother on 06/20/19.
-Marriage should be at least 14 years after birth of husband
-Marriage should be at least 14 years after birth of wife
