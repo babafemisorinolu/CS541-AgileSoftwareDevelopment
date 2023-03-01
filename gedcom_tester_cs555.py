@@ -250,7 +250,12 @@ def init():
 			if marriageBeforeDeath(marr, wdeath):
 					errors.append("ERROR: FAMILY: US05: " + family["ID"] + " marriage " + marr.strftime("%x") + " should be before death " + wdeath.strftime("%x") + ".")
 
-			
+		# US04 - Marriage before divorce
+		if 'DIV' in family:
+			divorce = family["DIV"]
+			if marriageBeforeDivorce(marr, divorce):
+					errors.append("ERROR: FAMILY: US04: " + family["ID"] + " marriage " + marr.strftime("%x") + " should be before divorce " + divorce.strftime("%x") + ".")
+
 		# US10 - Marriage after 14
 		hbirth = husb["BIRT"]
 		wbirth = wife["BIRT"]

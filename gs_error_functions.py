@@ -33,6 +33,10 @@ def birthBeforeMarriage(birth, marriage):
 # US05 - Marriage before death
 def marriageBeforeDeath(marriage,death):
 	return marriage.year - death.year - ((marriage.month, marriage.day) < (death.month, death.day)) >= 0
+	
+# US04 - Marriage before divorce
+def marriageBeforeDivorce(marriage,divorce):
+	return marriage.year - divorce.year - ((marriage.month, marriage.day) < (divorce.month, divorce.day)) >= 0
 
 # US08 - Birth before marriage of parents
 def birthBeforeMarriageofParents(marriage,birthchild):
