@@ -1,8 +1,3 @@
-# -------------------
-# Gabriel Souza
-# CS 555 Sprint 1
-# -------------------
-
 import unittest
 import sys
 
