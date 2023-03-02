@@ -1,0 +1,41 @@
+
+US04 - comparing the same dates
+2023-03-02 2023-03-02 True
+.
+US04 - comparing with the day after
+2023-03-02 2023-03-03 False
+.
+US04 - comparing with the day before
+2023-03-02 2023-03-01 True
+.
+US09 - if death of father was 1 month before
+2023-03-02 2023-01-31 True
+.
+US09 - if death of mother was 9 months before
+2023-03-02 2022-06-05 False
+.
+US09 - if death of mother was same day as birth
+2023-03-02 2023-03-02 True
+.
+US01 - comparing the same dates
+2023-03-02 2023-03-02 True
+.
+US01 - comparing with the day after
+2023-03-02 2023-03-03 False
+.
+US01 - comparing with the day before
+2023-03-02 2023-03-01 True
+.
+US02 - comparing the same dates
+2023-03-02 2023-03-02 True
+.
+US02 - comparing with the day after
+2023-03-02 2023-03-03 False
+.
+US02 - comparing with the day before
+2023-03-02 2023-03-01 True
+.
+----------------------------------------------------------------------
+Ran 12 tests in 0.001s
+
+OK

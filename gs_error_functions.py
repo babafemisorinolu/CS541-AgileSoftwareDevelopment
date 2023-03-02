@@ -14,8 +14,8 @@ def birthBeforeMomDeath(birth, momDeath):
 	return momDeath.year - birth.year - ((momDeath.month, momDeath.day) < (birth.month, birth.day)) >= 0
 
 def birthBeforeDadDeath(birth, dadDeath):
-	# calculate from 40 weeks (abt. 9 months) before dad's death
-	dadDeath -= timedelta(weeks = 40)
+	# calculate from 40 weeks (abt. 9 months) after dad's death
+	dadDeath += timedelta(weeks = 40)
 	return dadDeath.year - birth.year - ((dadDeath.month, dadDeath.day) < (birth.month, birth.day)) >= 0
 
 #US03 - Birth before Death
