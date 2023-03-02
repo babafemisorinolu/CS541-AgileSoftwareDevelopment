@@ -191,7 +191,10 @@ def init():
 	err2=verifySiblingsCannotMarry(fams,indis)
 	errors.extend(err)
 	errors.extend(err2)
-	
+
+	#US29 - List of deceased individuals
+	list_of_deceased = []
+
 	for person in indis:
 		person = getAge(currDate, person)
 		# print(person)
@@ -203,6 +206,7 @@ def init():
 		birth = person["BIRT"]
 
 		if 'DEAT' in person:
+			list_of_deceased.append(person)
 			death = person["DEAT"]
 			if birthBeforeDeath(birth, death):
 				errors.append("Birth should occur before death of an individual")
@@ -309,6 +313,10 @@ def init():
 
 	outfile.write('Living people over 30 who have never been married\n')
 	outfile.write(tabulate(livingSingles, headers = "keys", tablefmt="github"))
+	outfile.write('\n\n')
+
+	outfile.write('List of deceased individuals\n')
+	outfile.write(tabulate(list_of_deceased, headers = "keys", tablefmt="github"))
 	outfile.write('\n\n')
 
 	outfile.write('ERRORS\n')	
