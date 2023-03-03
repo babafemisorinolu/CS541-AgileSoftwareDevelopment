@@ -231,6 +231,18 @@ class TestUserStoryEight(unittest.TestCase):
 		print("Birth :" ,birth," Divorce : ", divorce, birthbeforeDivorceofParents(birth, divorce))
 		self.assertFalse(birthbeforeDivorceofParents(birth, divorce))
 
+#US06 - Divorce before death
+class TestUserStorySix(unittest.TestCase):
+	def testOneDaybeforeDeath(self):
+		print()
+		divorce_date = date(2016,12,21)
+		death_date = date(2016,12,22)
+		print("US06 - Divorce before death")
+		print(divorce_date, death_date, divorceBeforeDeath(divorce_date, death_date))
+		self.assertTrue(divorceBeforeDeath(divorce_date, death_date))
+
+	
+
 #US05 - Marriage before death
 class TestUserStoryFive(unittest.TestCase):
 	
