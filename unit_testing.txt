@@ -1,4 +1,14 @@
 
+US18 - comparing if siblings can marry
+actual: ['ERROR: INDIVIDUAL: US18: Gabriel /Souza/ and Dorcas /Souza/ are siblings and should not marry one another!']
+expected: ['ERROR: INDIVIDUAL: US18: Gabriel /Souza/ and Dorcas /Souza/ are siblings and should not marry one another!']
+True
+.
+US18 - comparing if siblings can marry
+actual: []
+expected: []
+True
+.
 US04 - comparing the same dates
 2023-03-02 2023-03-02 True
 .
@@ -26,20 +36,15 @@ US01 - comparing with the day after
 US01 - comparing with the day before
 2023-03-02 2023-03-01 True
 .
-US25 - Unique first names in families
-set() set()
+US16 - comparing male members of a family without having the same last name
+actual: ['ERROR: INDIVIDUAL: US16: Sebastian /Fernandez/ and Shester /Souza/ are male members of a family and should have the same last name!']
+expected: ['ERROR: INDIVIDUAL: US16: Sebastian /Fernandez/ and Shester /Souza/ are male members of a family and should have the same last name!']
+True
 .
-US25 - Unique first names in families
-set() {'Calvin /Williams/'}
-.
-US25 - Unique first names in families
-set() {'Calvin /Williams/', 'Nathan /Williams/', 'Ruby /Smith/'}
-.
-US25 - Unique first names in families
-set() {'Matt'}
-.
-US25 - Unique first names in families
-{'Stephanie'} {'Stephanie'}
+US16 - comparing male members of a family having same last name
+actual: []
+expected: []
+True
 .
 US02 - comparing the same dates
 2023-03-02 2023-03-02 True
@@ -51,6 +56,6 @@ US02 - comparing with the day before
 2023-03-02 2023-03-01 True
 .
 ----------------------------------------------------------------------
-Ran 17 tests in 0.000s
+Ran 16 tests in 0.001s
 
 OK
