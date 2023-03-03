@@ -177,3 +177,13 @@ def verifySiblingsCannotMarry(family, individuals):
         #  print("*"*20,"\n")
     #  print(errors)   
      return errors;
+
+#US35 - Recent Birth
+def listRecentBirth(today, birth):
+    diff = today - birth
+    return diff.days < 30
+
+#US36 - Recent Deaths
+def listRecentDeath(today, death):
+    diff = today - death
+    return diff.days < 30
