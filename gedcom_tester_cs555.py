@@ -184,11 +184,18 @@ def init():
 	indis.sort(key=lambda info: int(''.join(filter(str.isdigit, info["ID"]))))
 	fams.sort(key=lambda info: int(''.join(filter(str.isdigit, info["ID"]))))
 
-
+	# print(fams)
+	print(indis)
 	#US31 - List living single
-	livingSingles= (listLivingSingle(indis,currDate)) # US31
+	livingSingles= (listLivingSingle(indis,currDate)) # US3
+
+	#US16 - All male members of a family should have the same last name
 	err=verifyMaleMembersSurname(indis)
+
+	#US18 - Siblings should not marry one another
 	err2=verifySiblingsCannotMarry(fams,indis)
+
+
 	errors.extend(err)
 	errors.extend(err2)
 
@@ -200,7 +207,9 @@ def init():
 		# print(person)
 		# US07 - Less then 150 years old
 		if AgeGreaterThan150(person):
-			errors.append("ERROR: INDIVIDUAL: US07: " + person["NAME"] + " age (" + str(person["AGE"]) + ") should be less than 150 years old ")			
+			p_name=person["NAME"]
+			p_age=str(person["AGE"])
+			errors.append("ERROR: INDIVIDUAL: US07: " + p_name + " age (" + p_age + ") should be less than 150 years old ")			
 		
 		#US03 - Birth before death
 		birth = person["BIRT"]
