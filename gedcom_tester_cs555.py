@@ -253,6 +253,7 @@ def init():
 		family["WIFE NAME"] = wife["NAME"]
 		
 		# US05 - Marriage before death
+		
 		marr = family["MARR"]
 		if 'DEAT' in husb:
 			hdeath = husb["DEAT"]
