@@ -148,7 +148,6 @@ def verifyMaleMembersSurname(individuals):
     return errors
    
     
-
 #US18 - Siblings should not marry one another
 def verifySiblingsCannotMarry(family, individuals):
     #  print(individuals)

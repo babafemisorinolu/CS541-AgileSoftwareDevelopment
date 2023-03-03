@@ -1,4 +1,16 @@
 
+US08 - Birth before the marriage of parents (no more than 9 months after their divorce)
+Birth : 2023-03-02  Divorce :  2022-06-05 True
+.
+US08 - Birth before the marriage of parents (no more than 9 months after their divorce)
+Birth : 2023-03-02  Divorce :  2022-03-02 False
+.
+US08 - Birth before the marriage of parents
+Birth : 2023-03-02  Marriage :  2024-03-01 False
+.
+US08 - Birth before the marriage of parents
+Birth : 2023-03-02  Marriage :  2022-03-02 True
+.
 US18 - comparing if siblings can marry
 actual: ['ERROR: INDIVIDUAL: US18: Gabriel /Souza/ and Dorcas /Souza/ are siblings and should not marry one another!']
 expected: ['ERROR: INDIVIDUAL: US18: Gabriel /Souza/ and Dorcas /Souza/ are siblings and should not marry one another!']
@@ -8,6 +20,15 @@ US18 - comparing if siblings can marry
 actual: []
 expected: []
 True
+.
+US05 - Marriage before death
+2021-01-03 2021-01-02 False
+.
+US05 - Marriage before death
+2016-12-21 2016-12-22 True
+.
+US05 - Marriage before death
+2015-12-21 2016-12-22 True
 .
 US04 - comparing the same dates
 2023-03-02 2023-03-02 True
@@ -53,7 +74,7 @@ US25 - Unique first names in families
 set() {'Calvin /Williams/'} False
 .
 US25 - Unique first names in families
-set() {'Ruby /Smith/', 'Calvin /Williams/', 'Nathan /Williams/'} False
+set() {'Calvin /Williams/', 'Nathan /Williams/', 'Ruby /Smith/'} False
 .
 US25 - Unique first names in families
 set() {'Matt'} False
@@ -83,6 +104,6 @@ US02 - comparing with the day before
 2023-03-02 2023-03-01 True
 .
 ----------------------------------------------------------------------
-Ran 12 tests in 0.001s
+Ran 28 tests in 0.001s
 
 OK

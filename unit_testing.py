@@ -195,7 +195,68 @@ class TestUserStoryTwentyFive(unittest.TestCase):
 		print(actual, expected, actual == expected)
 		self.assertNotEqual(actual, expected)
 
+#US08 - Birth before the marriage of parents(and no more than 9 months after their divorce)
+class TestUserStoryEight(unittest.TestCase):
 
+	def testBirthOneYearBeforeMarriage(self):
+		print()
+		birth = date.today()
+		marriage = birth - timedelta(days = 365)
+		print("US08 - Birth before the marriage of parents")
+		print("Birth :" ,birth," Marriage : ",marriage, birthBeforeMarriage(birth, marriage))
+		self.assertTrue(birthBeforeMarriage(birth, marriage))
+
+	def testBirthOneYearAfterMarriage(self):
+		print()
+		birth = date.today()
+		marriage = birth + timedelta(days = 365)
+		print("US08 - Birth before the marriage of parents")
+		print("Birth :" ,birth," Marriage : ", marriage, birthBeforeMarriage(birth, marriage))
+		self.assertFalse(birthBeforeMarriage(birth, marriage))
+	
+	def testBirthNineMonthsAfterDivorce(self):
+		print()
+		birth = date.today()
+		divorce = birth - timedelta(days = 270)
+		print("US08 - Birth before the marriage of parents (no more than 9 months after their divorce)")
+
+		print("Birth :" ,birth," Divorce : ", divorce, birthbeforeDivorceofParents(birth, divorce))
+		self.assertTrue(birthbeforeDivorceofParents(birth, divorce))
+	
+	def testBirthOneYearAfterDivorce(self):
+		print()
+		birth = date.today()
+		divorce = birth - timedelta(days = 365)
+		print("US08 - Birth before the marriage of parents (no more than 9 months after their divorce)")
+		print("Birth :" ,birth," Divorce : ", divorce, birthbeforeDivorceofParents(birth, divorce))
+		self.assertFalse(birthbeforeDivorceofParents(birth, divorce))
+
+#US05 - Marriage before death
+class TestUserStoryFive(unittest.TestCase):
+	
+	def testOnedaybeforeDeath(self):
+		print()
+		marriage_date = date(2016,12,21)
+		death_date = date(2016,12,22)
+		print("US05 - Marriage before death")
+		print(marriage_date, death_date, marriageBeforeDeath(marriage_date, death_date))
+		self.assertTrue(marriageBeforeDeath(marriage_date, death_date))
+
+	def testOnedayafterDeath(self):
+		print()
+		marriage_date = date(2021,1,3)
+		death_date = date(2021,1,2)
+		print("US05 - Marriage before death")
+		print(marriage_date, death_date, marriageBeforeDeath(marriage_date, death_date))
+		self.assertFalse(marriageBeforeDeath(marriage_date, death_date))
+
+	def testYearbeforeDeath(self):
+		print()
+		marriage_date = date(2015,12,21)
+		death_date = date(2016,12,22)
+		print("US05 - Marriage before death")
+		print(marriage_date, death_date, marriageBeforeDeath(marriage_date, death_date))
+		self.assertTrue(marriageBeforeDeath(marriage_date, death_date))
 
 #US18 - Siblings should not marry
 class TestUserStoryEighteen(unittest.TestCase):	
