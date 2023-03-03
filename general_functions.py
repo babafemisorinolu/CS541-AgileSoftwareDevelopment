@@ -71,7 +71,7 @@ def searchByID(array, high, low, target):
         return searchByID(array, high, mid+1, target)
     return array[mid]
 
-#List all living people over 30 who have never been married in a GEDCOM file
+#US31- List all living people over 30 who have never been married in a GEDCOM file
 def listLivingSingle(indis,currDate):
     livingSingles=[]
     for person in indis:
@@ -83,7 +83,7 @@ def listLivingSingle(indis,currDate):
                 livingSingles.append(person)
     return livingSingles
 
-#Death should be less than 150 years after birth for dead people, 
+#US07 - Death should be less than 150 years after birth for dead people, 
 #and current date should be less than 150 years after birth for all living people
 def AgeGreaterThan150(person):
     if (person["AGE"]>=150):
@@ -106,7 +106,7 @@ def Family_names(names):
 def key_func(k):
     if ("FAMC" in k):
         return k['FAMC']
-    return "demo"
+    return "False"
  
 
 
@@ -116,7 +116,7 @@ def verifyMaleMembersSurname(individuals):
     INFO = sorted(individuals, key=key_func)
     for key, value in groupby(INFO, key_func):
         # print("hey",key)
-        if(key=="demo"):
+        if(key=="False"):
             continue
             
         # print(list(value))   
@@ -124,7 +124,7 @@ def verifyMaleMembersSurname(individuals):
         if(len(temp)>1):
             full=""
             last_name=""
-            sex=""
+            # sex=""
             # print(full, last_name, sex)
             for v in temp:
                 fn=v["NAME"]
@@ -134,7 +134,7 @@ def verifyMaleMembersSurname(individuals):
                 if(s=="M" and last_name==""):
                     full=fn
                     last_name=ln
-                    sex=s
+                    # sex=s
                 elif(s=="M" and last_name!=""):
                     if(last_name!=ln):
                         #All male members of a family should have the same last name
