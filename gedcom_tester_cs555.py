@@ -70,7 +70,7 @@ def readLine(fileLine):
 		# individual and family id tags have a different format
 		elif args[2] in validTags[args[0]][1]:
 			if args[2] == 'INDI':
-				#US-22 Unique IDs
+				#US22 Unique IDs
 				if args[1] not in indis_id: # check whether the individual IDs are unique or not
 					indi = Individual(args[1]) # creates new individual object with id specified by args[1]
 					indis.append(indi.info) # add object dict to list of individuals
@@ -243,17 +243,7 @@ def init():
 		family["HUSB NAME"] = husb["NAME"]
 		family["WIFE NAME"] = wife["NAME"]
 		
-		# US05 - Marriage before death
-		marr = family["MARR"]
-		if 'DEAT' in husb:
-			hdeath = husb["DEAT"]
-			if marriageBeforeDeath(marr, hdeath):
-					errors.append("ERROR: FAMILY: US05: " + family["ID"] + " marriage " + marr.strftime("%x") + " should be before death " + hdeath.strftime("%x") + ".")
-		if 'DEAT' in wife:
-			wdeath = wife["DEAT"]
-			if marriageBeforeDeath(marr, wdeath):
-					errors.append("ERROR: FAMILY: US05: " + family["ID"] + " marriage " + marr.strftime("%x") + " should be before death " + wdeath.strftime("%x") + ".")
-
+		
 		# US04 - Marriage before divorce
 		if 'DIV' in family:
 			divorce = family["DIV"]
