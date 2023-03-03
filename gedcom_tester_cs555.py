@@ -356,10 +356,14 @@ def init():
 	outfile.write('\n\n')
 
 	outfile.write('List of recent birth\n')
+	if len(list_of_birth) == 0:
+		outfile.write("There are no recent births")
 	outfile.write(tabulate(list_of_birth, headers = "keys", tablefmt="github"))
 	outfile.write('\n\n')
 
 	outfile.write('List of recent death\n')
+	if len(list_of_death) == 0:
+		outfile.write("There are no recent deaths")
 	outfile.write(tabulate(list_of_death, headers = "keys", tablefmt="github"))
 	outfile.write('\n\n')
 

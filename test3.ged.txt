@@ -54,7 +54,7 @@ List of recent birth
 | @I9@ | Anthony /Grill/ | M     | 2023-06-05 | @F4@   |    -1 | True    |
 
 List of recent death
-
+There are no recent deaths
 
 ERRORS
 ERROR: INDIVIDUAL: US01: @I9@: BIRT 06/05/23 occurs in the future.
@@ -67,7 +67,6 @@ ERROR: FAMILY: US09: @F0@: Child @I16@: BIRT 12/02/97 9 months after DEAT of fat
 ERROR : FAMILY: US08: @F0@: Child @I18@: BIRT 04/30/94 should be after marriage 09/05/94.
 ERROR: INDIVIDUAL: US25 : First names of individuals in the family cannot be same.
 ERROR: FAMILY: US04: @F5@ marriage 04/05/21 should be before divorce 04/04/21.
-ERROR: FAMILY: US05: @F7@ marriage 06/23/22 should be before death 06/20/19.
 ERROR: FAMILY: US09: @F7@: Child @I20@: BIRT 05/21/20 after DEAT of mother on 06/20/19.
 ERROR : FAMILY: US08: @F7@: Child @I20@: BIRT 05/21/20 should be after marriage 06/23/22.
 Marriage should be at least 14 years after birth of husband
