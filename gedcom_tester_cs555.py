@@ -256,12 +256,11 @@ def init():
 		marr = family["MARR"]
 		if 'DEAT' in husb:
 			hdeath = husb["DEAT"]
-			if marriageBeforeDeath(marr, hdeath):
-					errors.append("ERROR: FAMILY: US05: " + family["ID"] + " marriage " + marr.strftime("%x") + " should be before death " + hdeath.strftime("%x") + ".")
+			marriageBeforeDeath(marr, hdeath)
+					
 		if 'DEAT' in wife:
 			wdeath = wife["DEAT"]
-			if marriageBeforeDeath(marr, wdeath):
-					errors.append("ERROR: FAMILY: US05: " + family["ID"] + " marriage " + marr.strftime("%x") + " should be before death " + wdeath.strftime("%x") + ".")
+			marriageBeforeDeath(marr, wdeath)
 
 		# US04 - Marriage before divorce
 		if 'DIV' in family:
