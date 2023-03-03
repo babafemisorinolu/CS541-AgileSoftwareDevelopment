@@ -70,7 +70,7 @@ def readLine(fileLine):
 		# individual and family id tags have a different format
 		elif args[2] in validTags[args[0]][1]:
 			if args[2] == 'INDI':
-				#US-22 Unique IDs
+				#US22 Unique IDs
 				if args[1] not in indis_id: # check whether the individual IDs are unique or not
 					indi = Individual(args[1]) # creates new individual object with id specified by args[1]
 					indis.append(indi.info) # add object dict to list of individuals
@@ -192,11 +192,18 @@ def init():
 	indis.sort(key=lambda info: int(''.join(filter(str.isdigit, info["ID"]))))
 	fams.sort(key=lambda info: int(''.join(filter(str.isdigit, info["ID"]))))
 
-
+	# print(fams)
+	print(indis)
 	#US31 - List living single
-	livingSingles= (listLivingSingle(indis,currDate)) # US31
+	livingSingles= (listLivingSingle(indis,currDate)) # US3
+
+	#US16 - All male members of a family should have the same last name
 	err=verifyMaleMembersSurname(indis)
+
+	#US18 - Siblings should not marry one another
 	err2=verifySiblingsCannotMarry(fams,indis)
+
+
 	errors.extend(err)
 	errors.extend(err2)
 
@@ -210,7 +217,9 @@ def init():
 		# print(person)
 		# US07 - Less then 150 years old
 		if AgeGreaterThan150(person):
-			errors.append("ERROR: INDIVIDUAL: US07: " + person["NAME"] + " age (" + str(person["AGE"]) + ") should be less than 150 years old ")			
+			p_name=person["NAME"]
+			p_age=str(person["AGE"])
+			errors.append("ERROR: INDIVIDUAL: US07: " + p_name + " age (" + p_age + ") should be less than 150 years old ")			
 		
 		#US03 - Birth before death
 		birth = person["BIRT"]
@@ -261,12 +270,11 @@ def init():
 		marr = family["MARR"]
 		if 'DEAT' in husb:
 			hdeath = husb["DEAT"]
-			if marriageBeforeDeath(marr, hdeath):
-					errors.append("ERROR: FAMILY: US05: " + family["ID"] + " marriage " + marr.strftime("%x") + " should be before death " + hdeath.strftime("%x") + ".")
+			marriageBeforeDeath(marr, hdeath)
+					
 		if 'DEAT' in wife:
 			wdeath = wife["DEAT"]
-			if marriageBeforeDeath(marr, wdeath):
-					errors.append("ERROR: FAMILY: US05: " + family["ID"] + " marriage " + marr.strftime("%x") + " should be before death " + wdeath.strftime("%x") + ".")
+			marriageBeforeDeath(marr, wdeath)
 
 		# US04 - Marriage before divorce
 		if 'DIV' in family:
