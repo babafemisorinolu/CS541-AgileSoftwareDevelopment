@@ -51,3 +51,11 @@ def birthbeforeDivorceofParents(childBirthdate, divorce):
 # US02 - Birth before marriage
 def birthBeforeMarriage(birth, marriage):
 	return birth.year - marriage.year - ((birth.month, birth.day) < (marriage.month, marriage.day)) >= 0
+
+#US06 - Divorce before death 
+def divorceBeforeDeath(divorce, death):
+    return divorce.year - death.year - ((divorce.month, divorce.day) < (death.month, death.day)) >= 0
+
+#US42 - Reject illegitimate dates
+def invalidDate(dates):
+    return dates.month > 12

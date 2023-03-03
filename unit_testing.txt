@@ -82,6 +82,18 @@ set() {'Matt'} False
 US25 - Unique first names in families
 {'Stephanie'} {'Stephanie'} True
 .
+US06 - Divorce before Death
+2019-12-06 2022-08-06 False
+.
+US35 - comparing birth if its within 30 days
+2023-03-02 2023-02-23 True
+.
+US36 - comparing death if its within 30 days
+2023-03-02 2023-02-23 True
+.
+US03 - Birth before Death
+2000-12-06 2001-08-06 False
+.
 US02 - comparing the same dates
 2023-03-02 2023-03-02 True
 .

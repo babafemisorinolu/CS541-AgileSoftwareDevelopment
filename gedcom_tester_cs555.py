@@ -145,6 +145,10 @@ def readLine(fileLine):
 			# US01 - Dates before current date
 			if not dateBeforeToday(currDate, date):
 				errors.append("ERROR: INDIVIDUAL: US01: " + indis[len(indis)-1]["ID"] + ": " + tag + " "+ date.strftime("%x") + " occurs in the future.")
+
+			#US42 - Reject illegitimate dates 
+			if invalidDate(date):
+				errors.append("ERROR: INDIVIDUAL: US42: " + indis[len(indis)-1]["ID"] + ": " + tag + " "+ date.strftime("%x") + " is not legitimate.")
 		
 		# makes sure the previously saved object in the array is the necessary string tag
 		elif isinstance(fams[len(fams)-1], str):
@@ -154,6 +158,10 @@ def readLine(fileLine):
 			# US01 - Dates before current date
 			if not dateBeforeToday(currDate, date):
 				errors.append("ERROR: FAMILY: US01: " + fams[len(indis)-1]["ID"], ": " + tag + " "+ date.strftime("%x") + " occurs in the future.")
+			
+			#US42 - Reject illegitimate dates 
+			if invalidDate(date):
+				errors.append("ERROR: INDIVIDUAL: US42: " + fams[len(indis)-1]["ID"] + ": " + tag + " "+ date.strftime("%x") + " is not legitimate.")
 
 		# throw error if date tag does not proceed a level 1 tag)
 		else:
@@ -201,6 +209,8 @@ def init():
 
 	#US29 - List of deceased individuals
 	list_of_deceased = []
+	list_of_birth = []
+	list_of_death = []
 
 	for person in indis:
 		person = getAge(currDate, person)
@@ -213,12 +223,16 @@ def init():
 		
 		#US03 - Birth before death
 		birth = person["BIRT"]
+		if listRecentBirth(currDate, birth):
+			list_of_birth.append(person)
 
 		if 'DEAT' in person:
 			list_of_deceased.append(person)
 			death = person["DEAT"]
+			if listRecentDeath(currDate, death):
+				list_of_death.append(person)
 			if birthBeforeDeath(birth, death):
-				errors.append("Birth should occur before death of an individual")
+				errors.append("ERROR: INDIVIDUAL: US03: " + person["NAME"] + " birth " + birth.strftime("%x") + " should be before death " + death.strftime("%x") + ".")
 
 		# US02 - Birth before Marriage
 		if 'FAMS' in person:
@@ -269,6 +283,17 @@ def init():
 			divorce = family["DIV"]
 			if marriageBeforeDivorce(marr, divorce):
 					errors.append("ERROR: FAMILY: US04: " + family["ID"] + " marriage " + marr.strftime("%x") + " should be before divorce " + divorce.strftime("%x") + ".")
+		
+		#US06 - Divorce before death 
+			if 'DEAT' in husb:
+				hdeath = husb["DEAT"]
+				if divorceBeforeDeath(divorce, hdeath):
+					errors.append("ERROR: FAMILY: US06: " + family["ID"] + " divorce " + divorce.strftime("%x") + " should be before death " + hdeath.strftime("%x") + ".")
+
+			if 'DEAT' in wife:
+				wdeath = wife["DEAT"]
+				if divorceBeforeDeath(divorce, wdeath):
+					errors.append("ERROR: FAMILY: US06: " + family["ID"] + " divorce " + divorce.strftime("%x") + " should be before death " + wdeath.strftime("%x") + ".")
 
 		# US10 - Marriage after 14
 		hbirth = husb["BIRT"]
@@ -328,6 +353,14 @@ def init():
 
 	outfile.write('List of deceased individuals\n')
 	outfile.write(tabulate(list_of_deceased, headers = "keys", tablefmt="github"))
+	outfile.write('\n\n')
+
+	outfile.write('List of recent birth\n')
+	outfile.write(tabulate(list_of_birth, headers = "keys", tablefmt="github"))
+	outfile.write('\n\n')
+
+	outfile.write('List of recent death\n')
+	outfile.write(tabulate(list_of_death, headers = "keys", tablefmt="github"))
 	outfile.write('\n\n')
 
 	outfile.write('ERRORS\n')	

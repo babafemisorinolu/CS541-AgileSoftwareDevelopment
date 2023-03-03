@@ -317,7 +317,39 @@ class TestUserStorySixteen(unittest.TestCase):
 		print(err==expected)
 
 		self.assertEqual(err, expected)
-	
+	#US03 - Birth before Death
+class TestUserStoryThree(unittest.TestCase):
+	def testBirthBeforeDeath(self):
+		print()
+		birth = datetime.strptime("2000-12-06", '%Y-%m-%d').date()
+		death = datetime.strptime("2001-8-06", '%Y-%m-%d').date()
+		print("US03 - Birth before Death")
+		testResult = birthBeforeDeath(birth, death)
+		print(birth, death, testResult)
+		self.assertFalse(testResult)
+
+#US06 - Divorce before death 
+class TestUserStorySix(unittest.TestCase):
+	def testDivorceBeforeDeath(self):
+		print()
+		divorce = datetime.strptime("2019-12-06", '%Y-%m-%d').date()
+		death = datetime.strptime("2022-8-06", '%Y-%m-%d').date()
+		print("US06 - Divorce before Death")
+		testResult2 = divorceBeforeDeath(divorce, death)
+		print(divorce, death, testResult2)
+		self.assertFalse(testResult2)
+
+#US35 - list recent birth 
+class TestUserStoryThirtyFive(unittest.TestCase):
+	def testListRecentBirth(self):
+		print()
+		td = date.today()
+		birth = datetime.strptime("2023-02-23", '%Y-%m-%d').date()
+		print("US35 - comparing birth if its within 30 days")
+		testResult3 = listRecentBirth(td, birth)
+		print(td, birth, testResult3)
+		self.assertTrue(testResult3)
+
 
 	def testMaleMembersWithSameLastname(self):
 		print()
@@ -337,7 +369,17 @@ class TestUserStorySixteen(unittest.TestCase):
 		print(err==expected)
 
 		self.assertEqual(err, expected)
-	
+	#US36 - list recent death
+class TestUserStoryThirtySix(unittest.TestCase):
+	def testListRecentBirth(self):
+		print()
+		td = date.today()
+		death = datetime.strptime("2023-02-23", '%Y-%m-%d').date()
+		print("US36 - comparing death if its within 30 days")
+		testResult3 = listRecentDeath(td, death)
+		print(td, death, testResult3)
+		self.assertTrue(testResult3)
+
 
 
 if __name__ == '__main__':
