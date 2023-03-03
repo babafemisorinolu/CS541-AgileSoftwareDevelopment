@@ -4,7 +4,6 @@ import sys
 from gs_error_functions import *
 from general_functions import *
 
-
 # US01 - Dates before current date
 class TestUserStoryOne(unittest.TestCase):	
 
@@ -153,6 +152,49 @@ class TestUserStoryNine(unittest.TestCase):
 		isBefore = birthBeforeDadDeath(birth, death)
 		print (birth, death, isBefore)
 		self.assertTrue(isBefore)
+
+class TestUserStoryTwentyFive(unittest.TestCase):
+	def test_family_names_success(self):
+		print()
+		actual = Family_names(names = ['Matt /Jones/', 'Soraia /Sales/','Stephanie /Sales-Jones/','Stephanie /Sales-Jones/'])
+		expected = {'Stephanie'}
+		print("US25 - Unique first names in families")
+		print(actual,expected)
+		self.assertEqual(actual, expected)
+	
+	def test_family_names_not_equal(self):
+		print()
+		actual = Family_names(names = ['Matt /Jones/', 'Soraia /Sales/','Stephanie /Sales-Jones/','Natalie /Sales-Jones/'])
+		expected = {'Matt'}
+		print("US25 - Unique first names in families")
+		print(actual,expected)
+		self.assertNotEqual(actual, expected)
+
+	def test_family_names_is_not_equal(self):
+		print()
+		actual = Family_names(names = ['Sebastian /Fernandez/', 'Soraia /Sales/','Stephen /Fernandez/'])
+		expected = {'Calvin /Williams/'}
+		print("US25 - Unique first names in families")
+		print(actual,expected)
+		self.assertNotEqual(actual, expected)
+
+	def test_family_names_empty_set(self):
+		print()
+		actual = Family_names(names = ['Sebastian /Fernandez/', 'Soraia /Sales/','Stephen /Fernandez/'])
+		expected = set()
+		print("US25 - Unique first names in families")
+		print(actual,expected)
+		self.assertEqual(actual, expected)
+
+	def test_family_names_not_eq(self):
+		print()
+		actual = Family_names(names = [])
+		expected = {'Calvin /Williams/', 'Ruby /Smith/', 'Nathan /Williams/'}
+		print("US25 - Unique first names in families")
+		print(actual,expected)
+		self.assertNotEqual(actual, expected)
+
+
 
 
 
