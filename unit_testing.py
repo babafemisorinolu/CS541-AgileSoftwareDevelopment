@@ -153,13 +153,14 @@ class TestUserStoryNine(unittest.TestCase):
 		print (birth, death, isBefore)
 		self.assertTrue(isBefore)
 
+#US25 - Unique first names in the family.
 class TestUserStoryTwentyFive(unittest.TestCase):
 	def test_family_names_success(self):
 		print()
 		actual = Family_names(names = ['Matt /Jones/', 'Soraia /Sales/','Stephanie /Sales-Jones/','Stephanie /Sales-Jones/'])
 		expected = {'Stephanie'}
 		print("US25 - Unique first names in families")
-		print(actual,expected)
+		print(actual, expected, actual == expected)
 		self.assertEqual(actual, expected)
 	
 	def test_family_names_not_equal(self):
@@ -167,7 +168,7 @@ class TestUserStoryTwentyFive(unittest.TestCase):
 		actual = Family_names(names = ['Matt /Jones/', 'Soraia /Sales/','Stephanie /Sales-Jones/','Natalie /Sales-Jones/'])
 		expected = {'Matt'}
 		print("US25 - Unique first names in families")
-		print(actual,expected)
+		print(actual, expected, actual == expected)
 		self.assertNotEqual(actual, expected)
 
 	def test_family_names_is_not_equal(self):
@@ -175,7 +176,7 @@ class TestUserStoryTwentyFive(unittest.TestCase):
 		actual = Family_names(names = ['Sebastian /Fernandez/', 'Soraia /Sales/','Stephen /Fernandez/'])
 		expected = {'Calvin /Williams/'}
 		print("US25 - Unique first names in families")
-		print(actual,expected)
+		print(actual, expected, actual == expected)
 		self.assertNotEqual(actual, expected)
 
 	def test_family_names_empty_set(self):
@@ -183,7 +184,7 @@ class TestUserStoryTwentyFive(unittest.TestCase):
 		actual = Family_names(names = ['Sebastian /Fernandez/', 'Soraia /Sales/','Stephen /Fernandez/'])
 		expected = set()
 		print("US25 - Unique first names in families")
-		print(actual,expected)
+		print(actual, expected, actual == expected)
 		self.assertEqual(actual, expected)
 
 	def test_family_names_not_eq(self):
@@ -191,7 +192,7 @@ class TestUserStoryTwentyFive(unittest.TestCase):
 		actual = Family_names(names = [])
 		expected = {'Calvin /Williams/', 'Ruby /Smith/', 'Nathan /Williams/'}
 		print("US25 - Unique first names in families")
-		print(actual,expected)
+		print(actual, expected, actual == expected)
 		self.assertNotEqual(actual, expected)
 
 

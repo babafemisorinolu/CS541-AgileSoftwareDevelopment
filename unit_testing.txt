@@ -46,6 +46,21 @@ actual: []
 expected: []
 True
 .
+US25 - Unique first names in families
+set() set() True
+.
+US25 - Unique first names in families
+set() {'Calvin /Williams/'} False
+.
+US25 - Unique first names in families
+set() {'Ruby /Smith/', 'Calvin /Williams/', 'Nathan /Williams/'} False
+.
+US25 - Unique first names in families
+set() {'Matt'} False
+.
+US25 - Unique first names in families
+{'Stephanie'} {'Stephanie'} True
+.
 US02 - comparing the same dates
 2023-03-02 2023-03-02 True
 .
@@ -56,6 +71,6 @@ US02 - comparing with the day before
 2023-03-02 2023-03-01 True
 .
 ----------------------------------------------------------------------
-Ran 16 tests in 0.001s
+Ran 21 tests in 0.001s
 
 OK
