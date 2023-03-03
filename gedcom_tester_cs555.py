@@ -253,7 +253,7 @@ def init():
 		family["WIFE NAME"] = wife["NAME"]
 		
 		# US05 - Marriage before death
-		
+
 		marr = family["MARR"]
 		if 'DEAT' in husb:
 			hdeath = husb["DEAT"]
@@ -306,10 +306,9 @@ def init():
 					if birthBeforeMarriageofParents(marr, childBirthdate):
 						errors.append("ERROR : FAMILY: US08: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " should be after marriage " + marr.strftime("%x") + ".")
 
+		#US25- unique first names in the family bad smell code
 		result = Family_names(family_names)
-		if result :
-			errors.append("ERROR: INDIVIDUAL: US25 : First names of individuals in the family cannot be same.")
-			
+		
 
 	
 	# write table results to a new file
