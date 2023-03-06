@@ -7,7 +7,6 @@
 
 from tabulate import tabulate
 
-from gs_error_functions import *
 from general_functions import *
 
 
@@ -143,7 +142,7 @@ def readLine(fileLine):
 			indis[len(indis)-1][tag] = date
 			
 			# US01 - Dates before current date
-			if not dateBeforeToday(currDate, date):
+			if not compareDates(date, currDate):
 				errors.append("ERROR: INDIVIDUAL: US01: " + indis[len(indis)-1]["ID"] + ": " + tag + " "+ date.strftime("%x") + " occurs in the future.")
 
 			#US42 - Reject illegitimate dates 
@@ -156,12 +155,12 @@ def readLine(fileLine):
 			fams[len(fams)-1][tag] = date
 
 			# US01 - Dates before current date
-			if not dateBeforeToday(currDate, date):
-				errors.append("ERROR: FAMILY: US01: " + fams[len(indis)-1]["ID"], ": " + tag + " "+ date.strftime("%x") + " occurs in the future.")
+			if not compareDates(date, currDate):
+				errors.append("ERROR: FAMILY: US01: " + fams[len(fams)-1]["ID"] + ": " + tag + " "+ date.strftime("%x") + " occurs in the future.")
 			
 			#US42 - Reject illegitimate dates 
 			if invalidDate(date):
-				errors.append("ERROR: INDIVIDUAL: US42: " + fams[len(indis)-1]["ID"] + ": " + tag + " "+ date.strftime("%x") + " is not legitimate.")
+				errors.append("ERROR: INDIVIDUAL: US42: " + fams[len(fams)-1]["ID"] + ": " + tag + " "+ date.strftime("%x") + " is not legitimate.")
 
 		# throw error if date tag does not proceed a level 1 tag)
 		else:
@@ -231,7 +230,7 @@ def init():
 			death = person["DEAT"]
 			if listRecentDeath(currDate, death):
 				list_of_death.append(person)
-			if birthBeforeDeath(birth, death):
+			if not compareDates(birth, death):
 				errors.append("ERROR: INDIVIDUAL: US03: " + person["NAME"] + " birth " + birth.strftime("%x") + " should be before death " + death.strftime("%x") + ".")
 
 		# US02 - Birth before Marriage
@@ -241,7 +240,7 @@ def init():
 				famID = int(''.join(filter(str.isdigit, family)))
 				marriageDate = searchByID(fams, len(fams)-1, 0, famID)['MARR']
 
-				if birthBeforeMarriage(birth, marriageDate):
+				if not compareDates(birth, marriageDate):
 					errors.append("ERROR: INDIVIDUAL: US02: " + person["NAME"] + " birth " + birth.strftime("%x") + " should be before marriage " + marriageDate.strftime("%x") + ".")			
 
 	for family in fams:
@@ -270,39 +269,39 @@ def init():
 		marr = family["MARR"]
 		if 'DEAT' in husb:
 			hdeath = husb["DEAT"]
-			if marriageBeforeDeath(marr, hdeath) == False:
-				errors.append("ERROR: FAMILY: US05: " + family["ID"] + " marriage " + marr.strftime("%x") + " should be before death " + hdeath.strftime("%x") + ".")
+			if compareDates(marr, hdeath) == False:
+				errors.append("ERROR: FAMILY: US05: " + family["ID"] + ": Marriage " + marr.strftime("%x") + " should be before death " + hdeath.strftime("%x") + ".")
 		
 		if 'DEAT' in wife:
 			wdeath = wife["DEAT"]
-			if marriageBeforeDeath(marr, wdeath) == False:
-				errors.append("ERROR: FAMILY: US05: " + family["ID"] + " marriage " + marr.strftime("%x") + " should be before death " + wdeath.strftime("%x") + ".")
+			if compareDates(marr, wdeath) == False:
+				errors.append("ERROR: FAMILY: US05: " + family["ID"] + ": Marriage " + marr.strftime("%x") + " should be before death " + wdeath.strftime("%x") + ".")
 
 		# US04 - Marriage before divorce
 		if 'DIV' in family:
 			divorce = family["DIV"]
-			if marriageBeforeDivorce(marr, divorce):
-					errors.append("ERROR: FAMILY: US04: " + family["ID"] + " marriage " + marr.strftime("%x") + " should be before divorce " + divorce.strftime("%x") + ".")
+			if not compareDates(marr, divorce):
+					errors.append("ERROR: FAMILY: US04: " + family["ID"] + ": Marriage " + marr.strftime("%x") + " should be before divorce " + divorce.strftime("%x") + ".")
 		
 		#US06 - Divorce before death 
 			if 'DEAT' in husb:
 				hdeath = husb["DEAT"]
-				if divorceBeforeDeath(divorce, hdeath):
-					errors.append("ERROR: FAMILY: US06: " + family["ID"] + " divorce " + divorce.strftime("%x") + " should be before death " + hdeath.strftime("%x") + ".")
+				if not compareDates(divorce, hdeath):
+					errors.append("ERROR: FAMILY: US06: " + family["ID"] + ": Divorce " + divorce.strftime("%x") + " should be before death " + hdeath.strftime("%x") + ".")
 
 			if 'DEAT' in wife:
 				wdeath = wife["DEAT"]
-				if divorceBeforeDeath(divorce, wdeath):
-					errors.append("ERROR: FAMILY: US06: " + family["ID"] + " divorce " + divorce.strftime("%x") + " should be before death " + wdeath.strftime("%x") + ".")
+				if not compareDates(divorce, wdeath):
+					errors.append("ERROR: FAMILY: US06: " + family["ID"] + ": Divorce " + divorce.strftime("%x") + " should be before death " + wdeath.strftime("%x") + ".")
 
 		# US10 - Marriage after 14
 		hbirth = husb["BIRT"]
 		wbirth = wife["BIRT"]
 		
-		if marriageAfter14(hbirth, marr):
-			errors.append("Marriage should be at least 14 years after birth of husband")
-		if marriageAfter14(wbirth, marr):
-			errors.append("Marriage should be at least 14 years after birth of wife")
+		if not compareDates(hbirth, marr - timedelta(days= 14 * 365.25)):
+			errors.append("ERROR: FAMILY: US10: " + family["ID"] + ": Marriage " + marr.strftime("%x") + " should be at least 14 years after birth of husband " + hbirth.strftime("%x") + ".")
+		if not compareDates(wbirth, marr - timedelta(days= 14 * 365.25)):
+			errors.append("ERROR: FAMILY: US10: " + family["ID"] + ": Marriage " + marr.strftime("%x") + " should be at least 14 years after birth of wife " + wbirth.strftime("%x") + ".")
  
 		# US09 - Birth before death of parents
 		if "CHIL" in family:
@@ -317,25 +316,26 @@ def init():
 				childBirthdate = child["BIRT"]
 
 
-				if not wife["ALIVE"] and not birthBeforeMomDeath(childBirthdate, wife["DEAT"]):
+				if not wife["ALIVE"] and not compareDates(childBirthdate, wife["DEAT"] + timedelta(weeks = 40)):
 					errors.append("ERROR: FAMILY: US09: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " after DEAT of mother on " + wife["DEAT"].strftime("%x") + ".")
 
-				if not husb["ALIVE"] and not birthBeforeDadDeath(childBirthdate, husb["DEAT"]):
+				if not husb["ALIVE"] and not compareDates(childBirthdate, husb["DEAT"] + timedelta(weeks = 40)):
 					errors.append("ERROR: FAMILY: US09: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " 9 months after DEAT of father on " + husb["DEAT"].strftime("%x") + ".")
 
 				#US08 - Birth before the marriage of parents(and no more than 9 months after their divorce)
 				if "DIV" in family:
 					divorce = family["DIV"]
-					if birthbeforeDivorceofParents(divorce, childBirthdate):
-						errors.append("ERROR : FAMILY: US08: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " should be no more than 9 months after the divorce of the parents on " + marr.strftime("%x") + ".")
+					divorce += timedelta(weeks = 40)
+					if not compareDates(childBirthdate, divorce):
+						errors.append("ERROR: FAMILY: US08: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " should be no more than 9 months after the divorce of the parents on " + marr.strftime("%x") + ".")
 				else:		
-					if birthBeforeMarriageofParents(marr, childBirthdate):
-						errors.append("ERROR : FAMILY: US08: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " should be after marriage " + marr.strftime("%x") + ".")
+					if not compareDates(marr, childBirthdate):
+						errors.append("ERROR: FAMILY: US08: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " should be after marriage " + marr.strftime("%x") + ".")
 
 		#US25- unique first names in the family bad smell code
 		result = Family_names(family_names)
 		if result :
-			errors.append("ERROR: INDIVIDUAL: US25 : First names of individuals in the family cannot be same.")
+			errors.append("ERROR: FAMILY: US25: " + family["ID"] + ": First names of individuals in the family cannot be same.")
 			
 
 	

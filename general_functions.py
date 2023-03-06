@@ -3,7 +3,7 @@
 # CS 555 Sprint 1
 # -------------------
 
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from itertools import groupby
  
 # convert string to datetime object
@@ -20,6 +20,16 @@ def addDate(array, date, tag):
     currObject[tag] = date
 
     return currObject
+
+# used for all user stories that compares Dates
+# earlierDate returns true if it is before laterDate, else returns false 
+def compareDates(earlierDate, laterDate):
+	return laterDate.year - earlierDate.year - ((laterDate.month, laterDate.day) < (earlierDate.month, earlierDate.day)) >= 0
+
+#US42 - Reject illegitimate dates
+def invalidDate(dates):
+    return dates.month > 12
+
 
 # print the input and output of each new line 
 def validOutput(fileLine, args, isValid):

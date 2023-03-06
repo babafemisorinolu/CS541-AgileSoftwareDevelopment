@@ -8,7 +8,7 @@
 | @I5@  | Adelino /Souza/         | M     | 1944-10-07 | ['@F2@']         |    78 | True    |        |            |
 | @I6@  | Barry /Souza-JNR/       | M     | 1979-07-19 |                  |    43 | True    | @F2@   |            |
 | @I7@  | Schneider /Souza/       | F     | 1985-12-18 | ['@F4@']         |    37 | True    | @F2@   |            |
-| @I8@  | Anthony /Grill/         | M     | 1983-03-04 | ['@F4@']         |    39 | True    |        |            |
+| @I8@  | Anthony /Grill/         | M     | 1983-03-04 | ['@F4@']         |    40 | True    |        |            |
 | @I9@  | Anthony /Grill/         | M     | 2023-06-05 |                  |    -1 | True    | @F4@   |            |
 | @I10@ | Nathaniel /Grill/       | M     | 2017-06-05 |                  |     5 | True    | @F4@   |            |
 | @I11@ | Sebastian /Sales/       | M     | 1919-09-15 | ['@F12@']        |    99 | False   |        | 2019-02-07 |
@@ -64,10 +64,11 @@ ERROR: INDIVIDUAL: US02: Shester /Souza/ birth 08/09/75 should be before marriag
 ERROR: INDIVIDUAL: US02: Roseli /Souza/ birth 01/25/75 should be before marriage 07/01/45.
 ERROR: INDIVIDUAL: US07: Elza /Teixeira/ age (152) should be less than 150 years old 
 ERROR: FAMILY: US09: @F0@: Child @I16@: BIRT 12/02/97 9 months after DEAT of father on 02/27/96.
-ERROR : FAMILY: US08: @F0@: Child @I18@: BIRT 04/30/94 should be after marriage 09/05/94.
-ERROR: INDIVIDUAL: US25 : First names of individuals in the family cannot be same.
-ERROR: FAMILY: US04: @F5@ marriage 04/05/21 should be before divorce 04/04/21.
+ERROR: FAMILY: US08: @F0@: Child @I18@: BIRT 04/30/94 should be after marriage 09/05/94.
+ERROR: FAMILY: US25: @F4@: First names of individuals in the family cannot be same.
+ERROR: FAMILY: US04: @F5@: Marriage 04/05/21 should be before divorce 04/04/21.
+ERROR: FAMILY: US05: @F7@: Marriage 06/23/22 should be before death 06/20/19.
 ERROR: FAMILY: US09: @F7@: Child @I20@: BIRT 05/21/20 after DEAT of mother on 06/20/19.
-ERROR : FAMILY: US08: @F7@: Child @I20@: BIRT 05/21/20 should be after marriage 06/23/22.
-Marriage should be at least 14 years after birth of husband
-Marriage should be at least 14 years after birth of wife
+ERROR: FAMILY: US08: @F7@: Child @I20@: BIRT 05/21/20 should be after marriage 06/23/22.
+ERROR: FAMILY: US10: @F27@: Marriage 07/01/45 should be at least 14 years after birth of husband 08/09/75.
+ERROR: FAMILY: US10: @F27@: Marriage 07/01/45 should be at least 14 years after birth of wife 01/25/75.
