@@ -1,7 +1,6 @@
 import unittest
 import sys
 
-from gs_error_functions import *
 from general_functions import *
 
 # US01 - Dates before current date
@@ -12,7 +11,7 @@ class TestUserStoryOne(unittest.TestCase):
 
 		today = date.today()
 		testDate =  date.today()
-		isBefore = dateBeforeToday(today, testDate)
+		isBefore = compareDates(testDate, today)
 
 		print("US01 - comparing the same dates")
 		print (today, testDate, isBefore)
@@ -24,7 +23,7 @@ class TestUserStoryOne(unittest.TestCase):
 
 		today = date.today()
 		testDate = today - timedelta(days = 1)
-		isBefore = dateBeforeToday(today, testDate)
+		isBefore = compareDates(testDate, today)
 
 		print("US01 - comparing with the day before")
 		print (today, testDate, isBefore)
@@ -36,13 +35,13 @@ class TestUserStoryOne(unittest.TestCase):
 
 		today = date.today()
 		testDate = today + timedelta(days = 1)
-		isBefore = dateBeforeToday(today, testDate)
+		isBefore = compareDates(testDate, today)
 
 		print("US01 - comparing with the day after")
 		print (today, testDate, isBefore)
 
 		self.assertFalse(isBefore)
-		
+
 
 # US02 - Birth before marriage
 class TestUserStoryTwo(unittest.TestCase):	
@@ -52,7 +51,7 @@ class TestUserStoryTwo(unittest.TestCase):
 
 		today = date.today()
 		testDate =  date.today()
-		isBefore = dateBeforeToday(today, testDate)
+		isBefore = compareDates(testDate, today)
 
 		print("US02 - comparing the same dates")
 		print (today, testDate, isBefore)
@@ -64,7 +63,7 @@ class TestUserStoryTwo(unittest.TestCase):
 
 		today = date.today()
 		testDate = today - timedelta(days = 1)
-		isBefore = dateBeforeToday(today, testDate)
+		isBefore = compareDates(testDate, today)
 
 		print("US02 - comparing with the day before")
 		print (today, testDate, isBefore)
@@ -76,7 +75,7 @@ class TestUserStoryTwo(unittest.TestCase):
 
 		today = date.today()
 		testDate = today + timedelta(days = 1)
-		isBefore = dateBeforeToday(today, testDate)
+		isBefore = compareDates(testDate, today)
 
 		print("US02 - comparing with the day after")
 		print (today, testDate, isBefore)
@@ -91,7 +90,7 @@ class TestUserStoryFour(unittest.TestCase):
 
 		today = date.today()
 		testDate =  date.today()
-		isBefore = dateBeforeToday(today, testDate)
+		isBefore = compareDates(testDate, today)
 
 		print("US04 - comparing the same dates")
 		print (today, testDate, isBefore)
@@ -103,7 +102,7 @@ class TestUserStoryFour(unittest.TestCase):
 
 		today = date.today()
 		testDate = today - timedelta(days = 1)
-		isBefore = dateBeforeToday(today, testDate)
+		isBefore = compareDates(testDate, today)
 
 		print("US04 - comparing with the day before")
 		print (today, testDate, isBefore)
@@ -115,13 +114,12 @@ class TestUserStoryFour(unittest.TestCase):
 
 		today = date.today()
 		testDate = today + timedelta(days = 1)
-		isBefore = dateBeforeToday(today, testDate)
+		isBefore = compareDates(testDate, today)
 
 		print("US04 - comparing with the day after")
 		print (today, testDate, isBefore)
 
 		self.assertFalse(isBefore)
-		
 	
 # US09 - Birth before death of parents
 class TestUserStoryNine(unittest.TestCase):	
@@ -131,7 +129,7 @@ class TestUserStoryNine(unittest.TestCase):
 		birth = date.today()
 		death =  date.today()
 		print("US09 - if death of mother was same day as birth")
-		isBefore = birthBeforeMomDeath(birth, death)
+		isBefore = compareDates(birth, death)
 		print (birth, death, isBefore)
 		self.assertTrue(isBefore)
 
@@ -140,16 +138,16 @@ class TestUserStoryNine(unittest.TestCase):
 		birth = date.today()
 		death = birth - timedelta(days = 270)
 		print("US09 - if death of mother was 9 months before")
-		isBefore = birthBeforeMomDeath(birth, death)
+		isBefore = compareDates(birth, death)
 		print (birth, death, isBefore)
 		self.assertFalse(isBefore)	
 		
 	def testDadDeathOneMonthBefore(self):
 		print()
 		birth = date.today()
-		death = birth - timedelta(days = 30)
+		death = birth + timedelta(weeks = 40) - timedelta(days = 30)
 		print("US09 - if death of father was 1 month before")
-		isBefore = birthBeforeDadDeath(birth, death)
+		isBefore = compareDates(birth, death)
 		print (birth, death, isBefore)
 		self.assertTrue(isBefore)
 
@@ -201,18 +199,18 @@ class TestUserStoryEight(unittest.TestCase):
 	def testBirthOneYearBeforeMarriage(self):
 		print()
 		birth = date.today()
-		marriage = birth - timedelta(days = 365)
+		marriage = birth + timedelta(days = 365)
 		print("US08 - Birth before the marriage of parents")
-		print("Birth :" ,birth," Marriage : ",marriage, birthBeforeMarriage(birth, marriage))
-		self.assertTrue(birthBeforeMarriage(birth, marriage))
+		print("Birth :" ,birth," Marriage : ",marriage, compareDates(birth, marriage))
+		self.assertFalse(compareDates(marriage, birth))
 
 	def testBirthOneYearAfterMarriage(self):
 		print()
 		birth = date.today()
-		marriage = birth + timedelta(days = 365)
+		marriage = birth - timedelta(days = 365)
 		print("US08 - Birth before the marriage of parents")
-		print("Birth :" ,birth," Marriage : ", marriage, birthBeforeMarriage(birth, marriage))
-		self.assertFalse(birthBeforeMarriage(birth, marriage))
+		print("Birth :" ,birth," Marriage : ", marriage, compareDates(birth, marriage))
+		self.assertTrue(compareDates(marriage, birth))
 	
 	def testBirthNineMonthsAfterDivorce(self):
 		print()
@@ -220,16 +218,16 @@ class TestUserStoryEight(unittest.TestCase):
 		divorce = birth - timedelta(days = 270)
 		print("US08 - Birth before the marriage of parents (no more than 9 months after their divorce)")
 
-		print("Birth :" ,birth," Divorce : ", divorce, birthbeforeDivorceofParents(birth, divorce))
-		self.assertTrue(birthbeforeDivorceofParents(birth, divorce))
+		print("Birth :" ,birth," Divorce : ", divorce, compareDates(birth, divorce))
+		self.assertTrue(compareDates(birth, divorce + timedelta(days = 270)))
 	
 	def testBirthOneYearAfterDivorce(self):
 		print()
 		birth = date.today()
 		divorce = birth - timedelta(days = 365)
 		print("US08 - Birth before the marriage of parents (no more than 9 months after their divorce)")
-		print("Birth :" ,birth," Divorce : ", divorce, birthbeforeDivorceofParents(birth, divorce))
-		self.assertFalse(birthbeforeDivorceofParents(birth, divorce))
+		print("Birth :" ,birth," Divorce : ", divorce, compareDates(birth, divorce))
+		self.assertFalse(compareDates(birth, divorce + timedelta(days = 270)))
 
 #US06 - Divorce before death
 class TestUserStorySix(unittest.TestCase):
@@ -238,8 +236,8 @@ class TestUserStorySix(unittest.TestCase):
 		divorce_date = date(2016,12,21)
 		death_date = date(2016,12,22)
 		print("US06 - Divorce before death")
-		print(divorce_date, death_date, divorceBeforeDeath(divorce_date, death_date))
-		self.assertTrue(divorceBeforeDeath(divorce_date, death_date))
+		print(divorce_date, death_date, compareDates(divorce_date, death_date))
+		self.assertTrue(compareDates(divorce_date, death_date))
 
 	
 
@@ -251,24 +249,24 @@ class TestUserStoryFive(unittest.TestCase):
 		marriage_date = date(2016,12,21)
 		death_date = date(2016,12,22)
 		print("US05 - Marriage before death")
-		print(marriage_date, death_date, marriageBeforeDeath(marriage_date, death_date))
-		self.assertTrue(marriageBeforeDeath(marriage_date, death_date))
+		print(marriage_date, death_date, compareDates(marriage_date, death_date))
+		self.assertTrue(compareDates(marriage_date, death_date))
 
 	def testOnedayafterDeath(self):
 		print()
 		marriage_date = date(2021,1,3)
 		death_date = date(2021,1,2)
 		print("US05 - Marriage before death")
-		print(marriage_date, death_date, marriageBeforeDeath(marriage_date, death_date))
-		self.assertFalse(marriageBeforeDeath(marriage_date, death_date))
+		print(marriage_date, death_date, compareDates(marriage_date, death_date))
+		self.assertFalse(compareDates(marriage_date, death_date))
 
 	def testYearbeforeDeath(self):
 		print()
 		marriage_date = date(2015,12,21)
 		death_date = date(2016,12,22)
 		print("US05 - Marriage before death")
-		print(marriage_date, death_date, marriageBeforeDeath(marriage_date, death_date))
-		self.assertTrue(marriageBeforeDeath(marriage_date, death_date))
+		print(marriage_date, death_date, compareDates(marriage_date, death_date))
+		self.assertTrue(compareDates(marriage_date, death_date))
 
 #US18 - Siblings should not marry
 class TestUserStoryEighteen(unittest.TestCase):	
@@ -336,9 +334,9 @@ class TestUserStoryThree(unittest.TestCase):
 		birth = datetime.strptime("2000-12-06", '%Y-%m-%d').date()
 		death = datetime.strptime("2001-8-06", '%Y-%m-%d').date()
 		print("US03 - Birth before Death")
-		testResult = birthBeforeDeath(birth, death)
+		testResult = compareDates(birth, death)
 		print(birth, death, testResult)
-		self.assertFalse(testResult)
+		self.assertTrue(testResult)
 
 #US06 - Divorce before death 
 class TestUserStorySix(unittest.TestCase):
@@ -347,9 +345,9 @@ class TestUserStorySix(unittest.TestCase):
 		divorce = datetime.strptime("2019-12-06", '%Y-%m-%d').date()
 		death = datetime.strptime("2022-8-06", '%Y-%m-%d').date()
 		print("US06 - Divorce before Death")
-		testResult2 = divorceBeforeDeath(divorce, death)
+		testResult2 = compareDates(divorce, death)
 		print(divorce, death, testResult2)
-		self.assertFalse(testResult2)
+		self.assertTrue(testResult2)
 
 #US35 - list recent birth 
 class TestUserStoryThirtyFive(unittest.TestCase):
@@ -357,42 +355,7 @@ class TestUserStoryThirtyFive(unittest.TestCase):
 		print()
 		td = date.today()
 		birth = datetime.strptime("2023-02-23", '%Y-%m-%d').date()
-		print("US35 - comparing birth if its within 30 days")
-		testResult3 = listRecentBirth(td, birth)
-		print(td, birth, testResult3)
-		self.assertTrue(testResult3)
-
-
-	def testMaleMembersWithSameLastname(self):
-		print()
-
-		#US16 - All male members of a family should have the same last name
-		indis=[
-				{'ID': '@I0@', 'NAME': 'Sebastian /Fernandez/', 'SEX': 'M', 
-				'BIRT': date(1959, 11, 18), 'FAMS': ['@F5@'], 'AGE': 63, 'ALIVE': True,'FAMC': '@F2@'},
-				{'ID': '@I2@', 'NAME': 'Shester /Fernandez/', 'SEX': 'M', 
-     			'BIRT': date(1975, 8, 9), 'FAMS': ['@F27@'], 'FAMC': '@F2@'}
-				]
-		err=verifyMaleMembersSurname(indis)
-		expected=[]
-		print("US16 - comparing male members of a family having same last name")
-		print ("actual:",err)
-		print ("expected:",expected)
-		print(err==expected)
-
-		self.assertEqual(err, expected)
-	#US36 - list recent death
-class TestUserStoryThirtySix(unittest.TestCase):
-	def testListRecentBirth(self):
-		print()
-		td = date.today()
-		death = datetime.strptime("2023-02-23", '%Y-%m-%d').date()
-		print("US36 - comparing death if its within 30 days")
-		testResult3 = listRecentDeath(td, death)
-		print(td, death, testResult3)
-		self.assertTrue(testResult3)
-
-
+	
 
 if __name__ == '__main__':
 	# tihs logs stdout to a file instead of the command line

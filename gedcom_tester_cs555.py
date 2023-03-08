@@ -202,7 +202,6 @@ def init():
 	#US18 - Siblings should not marry one another
 	err2=verifySiblingsCannotMarry(fams,indis)
 
-
 	errors.extend(err)
 	errors.extend(err2)
 
@@ -240,8 +239,8 @@ def init():
 				famID = int(''.join(filter(str.isdigit, family)))
 				marriageDate = searchByID(fams, len(fams)-1, 0, famID)['MARR']
 
-				if not compareDates(birth, marriageDate):
-					errors.append("ERROR: INDIVIDUAL: US02: " + person["NAME"] + " birth " + birth.strftime("%x") + " should be before marriage " + marriageDate.strftime("%x") + ".")			
+				errors.extend(dateError(birth, marriageDate, family, ["US02", "birth", "marriage"]))
+		
 
 	for family in fams:
 		#names of all the individuals in the family
@@ -268,31 +267,21 @@ def init():
 		# US05 - Marriage before death
 		marr = family["MARR"]
 		if 'DEAT' in husb:
-			hdeath = husb["DEAT"]
-			if compareDates(marr, hdeath) == False:
-				errors.append("ERROR: FAMILY: US05: " + family["ID"] + ": Marriage " + marr.strftime("%x") + " should be before death " + hdeath.strftime("%x") + ".")
+			errors.extend(dateError(marr, husb["DEAT"], family["ID"], ["US05", "marriage", "death"]))
 		
 		if 'DEAT' in wife:
-			wdeath = wife["DEAT"]
-			if compareDates(marr, wdeath) == False:
-				errors.append("ERROR: FAMILY: US05: " + family["ID"] + ": Marriage " + marr.strftime("%x") + " should be before death " + wdeath.strftime("%x") + ".")
+			errors.extend(dateError(marr, wife["DEAT"], family["ID"], ["US05", "marriage", "death"]))
 
 		# US04 - Marriage before divorce
 		if 'DIV' in family:
-			divorce = family["DIV"]
-			if not compareDates(marr, divorce):
-					errors.append("ERROR: FAMILY: US04: " + family["ID"] + ": Marriage " + marr.strftime("%x") + " should be before divorce " + divorce.strftime("%x") + ".")
+			errors.extend(dateError(marr, family["DIV"], family["ID"], ["US05", "marriage", "divorce"]))
 		
 		#US06 - Divorce before death 
 			if 'DEAT' in husb:
-				hdeath = husb["DEAT"]
-				if not compareDates(divorce, hdeath):
-					errors.append("ERROR: FAMILY: US06: " + family["ID"] + ": Divorce " + divorce.strftime("%x") + " should be before death " + hdeath.strftime("%x") + ".")
+				errors.extend(dateError(marr, husb["DEAT"], family["ID"], ["US05", "divorce", "death"]))
 
 			if 'DEAT' in wife:
-				wdeath = wife["DEAT"]
-				if not compareDates(divorce, wdeath):
-					errors.append("ERROR: FAMILY: US06: " + family["ID"] + ": Divorce " + divorce.strftime("%x") + " should be before death " + wdeath.strftime("%x") + ".")
+				errors.extend(dateError(marr, wife["DEAT"], family["ID"], ["US05", "divorce", "death"]))
 
 		# US10 - Marriage after 14
 		hbirth = husb["BIRT"]

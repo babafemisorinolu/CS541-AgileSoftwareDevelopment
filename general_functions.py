@@ -26,6 +26,13 @@ def addDate(array, date, tag):
 def compareDates(earlierDate, laterDate):
 	return laterDate.year - earlierDate.year - ((laterDate.month, laterDate.day) < (earlierDate.month, earlierDate.day)) >= 0
 
+# add new error if date comparison does not pass
+def dateError(earlierDate, laterDate, famID, userStory):
+    newError = []
+    if not compareDates(earlierDate, laterDate):
+	    newError.append("ERROR: FAMILY: " + userStory[0] + ": " + famID + ": " + userStory[1] + " " + earlierDate.strftime("%x") + " should be before " + userStory[2] + " " + laterDate.strftime("%x") + ".")
+    return newError
+
 #US42 - Reject illegitimate dates
 def invalidDate(dates):
     return dates.month > 12
