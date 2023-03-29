@@ -7,7 +7,6 @@
 
 from tabulate import tabulate
 
-from gs_error_functions import *
 from general_functions import *
 
 
@@ -70,7 +69,7 @@ def readLine(fileLine):
 		# individual and family id tags have a different format
 		elif args[2] in validTags[args[0]][1]:
 			if args[2] == 'INDI':
-				#US-22 Unique IDs
+				#US22 Unique IDs
 				if args[1] not in indis_id: # check whether the individual IDs are unique or not
 					indi = Individual(args[1]) # creates new individual object with id specified by args[1]
 					indis.append(indi.info) # add object dict to list of individuals
@@ -143,8 +142,12 @@ def readLine(fileLine):
 			indis[len(indis)-1][tag] = date
 			
 			# US01 - Dates before current date
-			if not dateBeforeToday(currDate, date):
+			if not compareDates(date, currDate):
 				errors.append("ERROR: INDIVIDUAL: US01: " + indis[len(indis)-1]["ID"] + ": " + tag + " "+ date.strftime("%x") + " occurs in the future.")
+
+			#US42 - Reject illegitimate dates 
+			if invalidDate(date):
+				errors.append("ERROR: INDIVIDUAL: US42: " + indis[len(indis)-1]["ID"] + ": " + tag + " "+ date.strftime("%x") + " is not legitimate.")
 		
 		# makes sure the previously saved object in the array is the necessary string tag
 		elif isinstance(fams[len(fams)-1], str):
@@ -152,8 +155,12 @@ def readLine(fileLine):
 			fams[len(fams)-1][tag] = date
 
 			# US01 - Dates before current date
-			if not dateBeforeToday(currDate, date):
-				errors.append("ERROR: FAMILY: US01: " + fams[len(indis)-1]["ID"], ": " + tag + " "+ date.strftime("%x") + " occurs in the future.")
+			if not compareDates(date, currDate):
+				errors.append("ERROR: FAMILY: US01: " + fams[len(fams)-1]["ID"] + ": " + tag + " "+ date.strftime("%x") + " occurs in the future.")
+			
+			#US42 - Reject illegitimate dates 
+			if invalidDate(date):
+				errors.append("ERROR: INDIVIDUAL: US42: " + fams[len(fams)-1]["ID"] + ": " + tag + " "+ date.strftime("%x") + " is not legitimate.")
 
 		# throw error if date tag does not proceed a level 1 tag)
 		else:
@@ -184,22 +191,56 @@ def init():
 	indis.sort(key=lambda info: int(''.join(filter(str.isdigit, info["ID"]))))
 	fams.sort(key=lambda info: int(''.join(filter(str.isdigit, info["ID"]))))
 
+	# print(fams)
+	print(indis)
 	#US31 - List living single
-	livingSingles= (listLivingSingle(indis,currDate)) # US31
+	livingSingles= (listLivingSingle(indis,currDate)) # US3
+
+	#US16 - All male members of a family should have the same last name
+	err=verifyMaleMembersSurname(indis)
+
+	#US18 - Siblings should not marry one another
+	err2=verifySiblingsCannotMarry(fams,indis)
+
+	errors.extend(err)
+	errors.extend(err2)
+
+	#US29 - List of deceased individuals
+	list_of_deceased = []
+	list_of_birth = []
+	list_of_death = []
 
 	for person in indis:
 		person = getAge(currDate, person)
 		# print(person)
 		# US07 - Less then 150 years old
 		if AgeGreaterThan150(person):
-			errors.append("ERROR: INDIVIDUAL: US07: " + person["NAME"] + " age (" + str(person["AGE"]) + ") should be less than 150 years old ")			
+			p_name=person["NAME"]
+			p_age=str(person["AGE"])
+			errors.append("ERROR: INDIVIDUAL: US07: " + p_name + " age (" + p_age + ") should be less than 150 years old ")			
 		
 		#US03 - Birth before death
 		birth = person["BIRT"]
+		if listRecentBirth(currDate, birth):
+			list_of_birth.append(person)
+
 		if 'DEAT' in person:
+			list_of_deceased.append(person)
 			death = person["DEAT"]
-			if birthBeforeDeath(birth, death):
-				errors.append("Birth should occur before death of an individual")
+			if listRecentDeath(currDate, death):
+				list_of_death.append(person)
+			if not compareDates(birth, death):
+				errors.append("ERROR: INDIVIDUAL: US03: " + person["NAME"] + " birth " + birth.strftime("%x") + " should be before death " + death.strftime("%x") + ".")
+
+		# US02 - Birth before Marriage
+		if 'FAMS' in person:
+			for family in person['FAMS']:
+
+				famID = int(''.join(filter(str.isdigit, family)))
+				marriageDate = searchByID(fams, len(fams)-1, 0, famID)['MARR']
+
+				errors.extend(dateError(birth, marriageDate, family, ["US02", "birth", "marriage"]))
+		
 
 	for family in fams:
 		#names of all the individuals in the family
@@ -222,15 +263,35 @@ def init():
 
 		family["HUSB NAME"] = husb["NAME"]
 		family["WIFE NAME"] = wife["NAME"]
-        
+
+		# US05 - Marriage before death
+		marr = family["MARR"]
+		if 'DEAT' in husb:
+			errors.extend(dateError(marr, husb["DEAT"], family["ID"], ["US05", "marriage", "death"]))
+		
+		if 'DEAT' in wife:
+			errors.extend(dateError(marr, wife["DEAT"], family["ID"], ["US05", "marriage", "death"]))
+
+		# US04 - Marriage before divorce
+		if 'DIV' in family:
+			errors.extend(dateError(marr, family["DIV"], family["ID"], ["US05", "marriage", "divorce"]))
+		
+		#US06 - Divorce before death 
+			if 'DEAT' in husb:
+				errors.extend(dateError(marr, husb["DEAT"], family["ID"], ["US05", "divorce", "death"]))
+
+			if 'DEAT' in wife:
+				errors.extend(dateError(marr, wife["DEAT"], family["ID"], ["US05", "divorce", "death"]))
+
 		# US10 - Marriage after 14
 		hbirth = husb["BIRT"]
 		wbirth = wife["BIRT"]
-		marr = family["MARR"]
-		if marriageAfter14(hbirth, marr):
-			errors.append("Marriage should be at least 14 years after birth of husband")
-		if marriageAfter14(wbirth, marr):
-			errors.append("Marriage should be at least 14 years after birth of wife")
+		
+		if not compareDates(hbirth, marr - timedelta(days= 14 * 365.25)):
+			errors.append("ERROR: FAMILY: US10: " + family["ID"] + ": Marriage " + marr.strftime("%x") + " should be at least 14 years after birth of husband " + hbirth.strftime("%x") + ".")
+		if not compareDates(wbirth, marr - timedelta(days= 14 * 365.25)):
+			errors.append("ERROR: FAMILY: US10: " + family["ID"] + ": Marriage " + marr.strftime("%x") + " should be at least 14 years after birth of wife " + wbirth.strftime("%x") + ".")
+ 
 		# US09 - Birth before death of parents
 		if "CHIL" in family:
 			for childStringID in family["CHIL"]:
@@ -244,15 +305,26 @@ def init():
 				childBirthdate = child["BIRT"]
 
 
-				if not wife["ALIVE"] and not birthBeforeMomDeath(childBirthdate, wife["DEAT"]):
+				if not wife["ALIVE"] and not compareDates(childBirthdate, wife["DEAT"] + timedelta(weeks = 40)):
 					errors.append("ERROR: FAMILY: US09: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " after DEAT of mother on " + wife["DEAT"].strftime("%x") + ".")
 
-				if not husb["ALIVE"] and not birthBeforeDadDeath(childBirthdate, husb["DEAT"]):
+				if not husb["ALIVE"] and not compareDates(childBirthdate, husb["DEAT"] + timedelta(weeks = 40)):
 					errors.append("ERROR: FAMILY: US09: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " 9 months after DEAT of father on " + husb["DEAT"].strftime("%x") + ".")
-		
+
+				#US08 - Birth before the marriage of parents(and no more than 9 months after their divorce)
+				if "DIV" in family:
+					divorce = family["DIV"]
+					divorce += timedelta(weeks = 40)
+					if not compareDates(childBirthdate, divorce):
+						errors.append("ERROR: FAMILY: US08: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " should be no more than 9 months after the divorce of the parents on " + marr.strftime("%x") + ".")
+				else:		
+					if not compareDates(marr, childBirthdate):
+						errors.append("ERROR: FAMILY: US08: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " should be after marriage " + marr.strftime("%x") + ".")
+
+		#US25- unique first names in the family bad smell code
 		result = Family_names(family_names)
 		if result :
-			errors.append("ERROR: INDIVIDUAL: US25 : First names of individuals in the family cannot be same.")
+			errors.append("ERROR: FAMILY: US25: " + family["ID"] + ": First names of individuals in the family cannot be same.")
 			
 
 	
@@ -266,6 +338,22 @@ def init():
 
 	outfile.write('Living people over 30 who have never been married\n')
 	outfile.write(tabulate(livingSingles, headers = "keys", tablefmt="github"))
+	outfile.write('\n\n')
+
+	outfile.write('List of deceased individuals\n')
+	outfile.write(tabulate(list_of_deceased, headers = "keys", tablefmt="github"))
+	outfile.write('\n\n')
+
+	outfile.write('List of recent birth\n')
+	if len(list_of_birth) == 0:
+		outfile.write("There are no recent births")
+	outfile.write(tabulate(list_of_birth, headers = "keys", tablefmt="github"))
+	outfile.write('\n\n')
+
+	outfile.write('List of recent death\n')
+	if len(list_of_death) == 0:
+		outfile.write("There are no recent deaths")
+	outfile.write(tabulate(list_of_death, headers = "keys", tablefmt="github"))
 	outfile.write('\n\n')
 
 	outfile.write('ERRORS\n')	
