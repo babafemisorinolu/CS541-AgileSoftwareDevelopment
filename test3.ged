@@ -1,45 +1,51 @@
 0 HEAD
 0 NOTE Github repository: babafemisorinolu/CS555-AgileSoftwareDevelopment
-0 NOTE Four Generations of my (imaginary) family
+0 NOTE Four Generations of imaginary family
 0 @I23@ INDI
-1 NAME Dorcas /Souza/
+1 NAME Dorcas /Smith/
 1 SEX F
 1 BIRT
 2 DATE 12 JUN 1990
 1 FAMC @F27@
+0 @I77@ INDI
+1 NAME Dorcas /Smith/
+1 SEX F
+1 BIRT
+2 DATE 12 JUN 1990
+1 FAMC @F12@
 0 @I22@ INDI
-1 NAME Gabriel /Souza/
+1 NAME Daniel /Smith/
 1 SEX M
 1 BIRT
 2 DATE 12 SEP 2000
 1 FAMC @F27@
 0 @I2@ INDI
-1 NAME Shester /Souza/
+1 NAME Chester /Smith/
 1 SEX M
 1 BIRT
 2 DATE 9 AUG 1975
 1 FAMS @F27@
 1 FAMC @F2@
 0 @I6@ INDI
-1 NAME Barry /Souza-JNR/
+1 NAME Barry /Smith-JNR/
 1 SEX M
 1 BIRT
 2 DATE 19 JUL 1979
 1 FAMC @F2@
 0 @I3@ INDI
-1 NAME Roseli /Souza/
+1 NAME Rosa /Smith/
 1 SEX F
 1 BIRT
 2 DATE 25 JAN 1975
 1 FAMS @F27@
 0 @I4@ INDI
-1 NAME Sienna /Souza/
+1 NAME Sienna /Smith/
 1 SEX F
 1 BIRT
 2 DATE 13 MAY 2013
 1 FAMC @F27@
 0 @I5@ INDI
-1 NAME Adelino /Souza/
+1 NAME Adelino /Smith/
 1 SEX M
 1 BIRT
 2 DATE 7 OCT 1944
@@ -52,7 +58,7 @@
 1 FAMS @F2@
 1 FAMC @F12@
 0 @I7@ INDI
-1 NAME Schneider /Souza/
+1 NAME Schneider /Smith/
 1 SEX F
 1 BIRT
 2 DATE 18 DEC 1985
@@ -200,6 +206,11 @@
 1 MARR
 2 DATE 23 JUN 2022
 0 @F28@ FAM
+1 HUSB @I22@
+1 WIFE @I23@
+1 MARR
+2 DATE 21 FEB 2023
+0 @F30@ FAM
 1 HUSB @I22@
 1 WIFE @I23@
 1 MARR

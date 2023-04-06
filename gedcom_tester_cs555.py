@@ -192,7 +192,7 @@ def init():
 	fams.sort(key=lambda info: int(''.join(filter(str.isdigit, info["ID"]))))
 
 	# print(fams)
-	print(indis)
+	# print(indis)
 	#US31 - List living single
 	livingSingles= (listLivingSingle(indis,currDate)) # US3
 
@@ -210,8 +210,11 @@ def init():
 	list_of_birth = []
 	list_of_death = []
 
+	indis_byBirthDate = {}
+
 	for person in indis:
 		person = getAge(currDate, person)
+
 		# print(person)
 		# US07 - Less then 150 years old
 		if AgeGreaterThan150(person):
@@ -219,11 +222,21 @@ def init():
 			p_age=str(person["AGE"])
 			errors.append("ERROR: INDIVIDUAL: US07: " + p_name + " age (" + p_age + ") should be less than 150 years old ")			
 		
-		#US03 - Birth before death
 		birth = person["BIRT"]
+
 		if listRecentBirth(currDate, birth):
 			list_of_birth.append(person)
 
+		# US23 - Unique name and birth date
+		if birth in indis_byBirthDate:
+			for sameBirthday_indi in indis_byBirthDate[birth]:
+				if person["NAME"] == sameBirthday_indi["NAME"]:
+					errors.append("ERROR: INDIVIDUAL: US23: " + person["ID"] + ": Idividual birth date and name should not be the same as individual " + sameBirthday_indi["ID"] + ".")
+			indis_byBirthDate[birth].append(person)
+		else:
+			indis_byBirthDate[birth] = [person]
+
+		#US03 - Birth before death
 		if 'DEAT' in person:
 			list_of_deceased.append(person)
 			death = person["DEAT"]
@@ -240,11 +253,13 @@ def init():
 				marriageDate = searchByID(fams, len(fams)-1, 0, famID)['MARR']
 
 				errors.extend(dateError(birth, marriageDate, family, ["US02", "birth", "marriage"]))
-		
+	
+	fams_byMarriageDate = {}
 
 	for family in fams:
 		#names of all the individuals in the family
 		family_names = []
+
 		# turn husband string ID into a number
 		husbID = int(''.join(filter(str.isdigit, family["HUSB"])))
 		husb = searchByID(indis, len(indis), 0, husbID)
@@ -271,6 +286,15 @@ def init():
 		
 		if 'DEAT' in wife:
 			errors.extend(dateError(marr, wife["DEAT"], family["ID"], ["US05", "marriage", "death"]))
+
+		# US24 - Unique families by spouses
+		if marr in fams_byMarriageDate:
+			for sameMarriage_fam in fams_byMarriageDate[marr]:
+				if family["HUSB NAME"] == sameMarriage_fam["HUSB NAME"] and family["WIFE NAME"] == sameMarriage_fam["WIFE NAME"]:
+					errors.append("ERROR: FAMILY: US24: " + family["ID"] + ": Marriage date, husband name, and wife name should not be the same as family " + sameMarriage_fam["ID"] + ".")
+			fams_byMarriageDate[marr].append(family)
+		else:
+			fams_byMarriageDate[marr] = [family]
 
 		# US04 - Marriage before divorce
 		if 'DIV' in family:
