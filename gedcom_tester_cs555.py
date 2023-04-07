@@ -209,6 +209,9 @@ def init():
 	list_of_deceased = []
 	list_of_birth = []
 	list_of_death = []
+	list_of_orphans = []
+
+	indis_byBirthDate = {}
 
 	indis_byBirthDate = {}
 
@@ -328,6 +331,17 @@ def init():
 	
 				childBirthdate = child["BIRT"]
 
+				#US33 - List all orphaned children (both parents dead and child < 18 years old)
+				if 'DEAT' in husb and 'DEAT' in wife and child['AGE'] < 18:
+					list_of_orphans.append(child)
+
+				#US12 - Mother should be less than 60 years older than her children and father should be less than 80 years older than his children
+				if not compareDates(childBirthdate, husb["BIRT"] + timedelta(days = 80 * 365.25)):
+					errors.append("ERROR: FAMILY: US12: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " after BIRT of father on " + husb["BIRT"].strftime("%x") + ".")
+				if not compareDates(childBirthdate, wife["BIRT"] + timedelta(days = 60 * 365.25)):
+					errors.append("ERROR: FAMILY: US12: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " after BIRT of mother on " + wife["BIRT"].strftime("%x") + ".")
+
+
 
 				if not wife["ALIVE"] and not compareDates(childBirthdate, wife["DEAT"] + timedelta(weeks = 40)):
 					errors.append("ERROR: FAMILY: US09: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " after DEAT of mother on " + wife["DEAT"].strftime("%x") + ".")
@@ -366,6 +380,10 @@ def init():
 
 	outfile.write('List of deceased individuals\n')
 	outfile.write(tabulate(list_of_deceased, headers = "keys", tablefmt="github"))
+	outfile.write('\n\n')
+
+	outfile.write('List of orphans\n')
+	outfile.write(tabulate(list_of_orphans, headers = "keys", tablefmt="github"))
 	outfile.write('\n\n')
 
 	outfile.write('List of recent birth\n')

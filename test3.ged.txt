@@ -1,28 +1,28 @@
-| ID    | NAME                    | SEX   | BIRT       | FAMS             |   AGE | ALIVE   | FAMC   | DEAT       |
-|-------|-------------------------|-------|------------|------------------|-------|---------|--------|------------|
-| @I0@  | Sebastian /Fernandez/   | M     | 1959-11-24 | ['@F5@']         |    63 | True    |        |            |
-| @I1@  | Isis /Sales/            | F     | 1946-06-12 | ['@F2@']         |    76 | True    | @F12@  |            |
-| @I2@  | Chester /Smith/         | M     | 1975-08-09 | ['@F27@']        |    47 | True    | @F2@   |            |
-| @I3@  | Rosa /Smith/            | F     | 1975-01-25 | ['@F27@']        |    48 | True    |        |            |
-| @I4@  | Sienna /Smith/          | F     | 2013-05-13 |                  |     9 | True    | @F27@  |            |
-| @I5@  | Adelino /Smith/         | M     | 1944-10-07 | ['@F2@']         |    78 | True    |        |            |
-| @I6@  | Barry /Smith-JNR/       | M     | 1979-07-19 |                  |    43 | True    | @F2@   |            |
-| @I7@  | Schneider /Smith/       | F     | 1985-12-18 | ['@F4@']         |    37 | True    | @F2@   |            |
-| @I8@  | Anthony /Grill/         | M     | 1983-03-04 | ['@F4@']         |    40 | True    |        |            |
-| @I9@  | Anthony /Grill/         | M     | 2023-06-05 |                  |    -1 | True    | @F4@   |            |
-| @I10@ | Nathaniel /Grill/       | M     | 2017-06-05 |                  |     5 | True    | @F4@   |            |
-| @I11@ | Sebastian /Sales/       | M     | 1919-09-15 | ['@F12@']        |    99 | False   |        | 2019-02-07 |
-| @I13@ | Soraia /Sales/          | F     | 1964-10-09 | ['@F5@', '@F0@'] |    58 | True    | @F12@  |            |
-| @I15@ | Matt /Jones/            | M     | 1962-05-07 | ['@F0@']         |    33 | False   |        | 1996-02-27 |
-| @I16@ | Stephanie /Sales-Jones/ | F     | 1997-12-02 |                  |    25 | True    | @F0@   |            |
-| @I17@ | Stephen /Fernandez/     | M     | 2013-08-12 |                  |     9 | True    | @F5@   |            |
-| @I18@ | Natalie /Sales-Jones/   | F     | 1994-04-30 | ['@F7@']         |    25 | False   | @F0@   | 2019-06-20 |
-| @I19@ | Michael /Johnson/       | M     | 1996-09-19 | ['@F7@']         |    26 | True    |        |            |
-| @I20@ | Matt /Johnson/          | M     | 2020-05-21 |                  |     2 | True    | @F7@   |            |
-| @I22@ | Daniel /Smith/          | M     | 2000-09-12 |                  |    22 | True    | @F27@  |            |
-| @I23@ | Dorcas /Smith/          | F     | 1990-06-12 |                  |    32 | True    | @F27@  |            |
-| @I47@ | Elza /Teixeira/         | F     | 1865-03-01 | ['@F12@']        |   152 | False   |        | 2017-10-22 |
-| @I77@ | Dorcas /Smith/          | F     | 1990-06-12 |                  |    32 | True    | @F12@  |            |
+| ID    | NAME                    | SEX   | BIRT       | DEAT       | FAMS             |   AGE | ALIVE   | FAMC   |
+|-------|-------------------------|-------|------------|------------|------------------|-------|---------|--------|
+| @I0@  | Sebastian /Fernandez/   | M     | 1959-11-24 | 2022-05-05 | ['@F5@']         |    62 | False   |        |
+| @I1@  | Isis /Sales/            | F     | 1946-06-12 |            | ['@F2@']         |    76 | True    | @F12@  |
+| @I2@  | Chester /Smith/         | M     | 1975-08-09 |            | ['@F27@']        |    47 | True    | @F2@   |
+| @I3@  | Rosa /Smith/            | F     | 1975-01-25 |            | ['@F27@']        |    48 | True    |        |
+| @I4@  | Sienna /Smith/          | F     | 2013-05-13 |            |                  |     9 | True    | @F27@  |
+| @I5@  | Adelino /Smith/         | M     | 1944-10-07 |            | ['@F2@']         |    78 | True    |        |
+| @I6@  | Barry /Smith-JNR/       | M     | 1979-07-19 |            |                  |    43 | True    | @F2@   |
+| @I7@  | Schneider /Smith/       | F     | 1985-12-18 |            | ['@F4@']         |    37 | True    | @F2@   |
+| @I8@  | Anthony /Grill/         | M     | 1983-03-04 |            | ['@F4@']         |    40 | True    |        |
+| @I9@  | Anthony /Grill/         | M     | 2023-06-05 |            |                  |    -1 | True    | @F4@   |
+| @I10@ | Nathaniel /Grill/       | M     | 2017-06-05 |            |                  |     5 | True    | @F4@   |
+| @I11@ | Sebastian /Sales/       | M     | 1919-09-15 | 2019-02-07 | ['@F12@']        |    99 | False   |        |
+| @I13@ | Soraia /Sales/          | F     | 1964-10-09 | 2022-12-13 | ['@F5@', '@F0@'] |    58 | False   | @F12@  |
+| @I15@ | Matt /Jones/            | M     | 1962-05-07 | 1996-02-27 | ['@F0@']         |    33 | False   |        |
+| @I16@ | Stephanie /Sales-Jones/ | F     | 1997-12-02 |            |                  |    25 | True    | @F0@   |
+| @I17@ | Stephen /Fernandez/     | M     | 2013-08-12 |            |                  |     9 | True    | @F5@   |
+| @I18@ | Natalie /Sales-Jones/   | F     | 1994-04-30 | 2019-06-20 | ['@F7@']         |    25 | False   | @F0@   |
+| @I19@ | Michael /Johnson/       | M     | 1996-09-19 |            | ['@F7@']         |    26 | True    |        |
+| @I20@ | Matt /Johnson/          | M     | 2020-05-21 |            |                  |     2 | True    | @F7@   |
+| @I22@ | Daniel /Smith/          | M     | 2000-09-12 |            |                  |    22 | True    | @F27@  |
+| @I23@ | Dorcas /Smith/          | F     | 1990-06-12 |            |                  |    32 | True    | @F27@  |
+| @I47@ | Elza /Teixeira/         | F     | 1865-03-01 | 2017-10-22 | ['@F12@']        |   152 | False   |        |
+| @I77@ | Dorcas /Smith/          | F     | 1990-06-12 |            |                  |    32 | True    | @F12@  |
 
 | ID    | HUSB   | WIFE   | CHIL                       | MARR       | HUSB NAME             | WIFE NAME             | DIV        |
 |-------|--------|--------|----------------------------|------------|-----------------------|-----------------------|------------|
@@ -44,12 +44,19 @@ Living people over 30 who have never been married
 | @I77@ | Dorcas /Smith/    | F     | 1990-06-12 | @F12@  |    32 | True    |
 
 List of deceased individuals
-| ID    | NAME                  | SEX   | BIRT       | DEAT       | FAMS      |   AGE | ALIVE   | FAMC   |
-|-------|-----------------------|-------|------------|------------|-----------|-------|---------|--------|
-| @I11@ | Sebastian /Sales/     | M     | 1919-09-15 | 2019-02-07 | ['@F12@'] |    99 | False   |        |
-| @I15@ | Matt /Jones/          | M     | 1962-05-07 | 1996-02-27 | ['@F0@']  |    33 | False   |        |
-| @I18@ | Natalie /Sales-Jones/ | F     | 1994-04-30 | 2019-06-20 | ['@F7@']  |    25 | False   | @F0@   |
-| @I47@ | Elza /Teixeira/       | F     | 1865-03-01 | 2017-10-22 | ['@F12@'] |   152 | False   |        |
+| ID    | NAME                  | SEX   | BIRT       | DEAT       | FAMS             |   AGE | ALIVE   | FAMC   |
+|-------|-----------------------|-------|------------|------------|------------------|-------|---------|--------|
+| @I0@  | Sebastian /Fernandez/ | M     | 1959-11-24 | 2022-05-05 | ['@F5@']         |    62 | False   |        |
+| @I11@ | Sebastian /Sales/     | M     | 1919-09-15 | 2019-02-07 | ['@F12@']        |    99 | False   |        |
+| @I13@ | Soraia /Sales/        | F     | 1964-10-09 | 2022-12-13 | ['@F5@', '@F0@'] |    58 | False   | @F12@  |
+| @I15@ | Matt /Jones/          | M     | 1962-05-07 | 1996-02-27 | ['@F0@']         |    33 | False   |        |
+| @I18@ | Natalie /Sales-Jones/ | F     | 1994-04-30 | 2019-06-20 | ['@F7@']         |    25 | False   | @F0@   |
+| @I47@ | Elza /Teixeira/       | F     | 1865-03-01 | 2017-10-22 | ['@F12@']        |   152 | False   |        |
+
+List of orphans
+| ID    | NAME                | SEX   | BIRT       | FAMC   |   AGE | ALIVE   |
+|-------|---------------------|-------|------------|--------|-------|---------|
+| @I17@ | Stephen /Fernandez/ | M     | 2013-08-12 | @F5@   |     9 | True    |
 
 List of recent birth
 | ID   | NAME            | SEX   | BIRT       | FAMC   |   AGE | ALIVE   |
@@ -75,6 +82,8 @@ ERROR: FAMILY: US05: @F5@: marriage 04/05/21 should be before divorce 04/04/21.
 ERROR: FAMILY: US05: @F7@: marriage 06/23/22 should be before death 06/20/19.
 ERROR: FAMILY: US09: @F7@: Child @I20@: BIRT 05/21/20 after DEAT of mother on 06/20/19.
 ERROR: FAMILY: US08: @F7@: Child @I20@: BIRT 05/21/20 should be after marriage 06/23/22.
+ERROR: FAMILY: US12: @F12@: Child @I1@: BIRT 06/12/46 after BIRT of mother on 03/01/65.
+ERROR: FAMILY: US12: @F12@: Child @I13@: BIRT 10/09/64 after BIRT of mother on 03/01/65.
 ERROR: FAMILY: US10: @F27@: Marriage 07/01/45 should be at least 14 years after birth of husband 08/09/75.
 ERROR: FAMILY: US10: @F27@: Marriage 07/01/45 should be at least 14 years after birth of wife 01/25/75.
 ERROR: FAMILY: US24: @F30@: Marriage date, husband name, and wife name should not be the same as family @F28@.
