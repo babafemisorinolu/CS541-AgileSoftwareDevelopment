@@ -321,6 +321,7 @@ def init():
  
 		# US09 - Birth before death of parents
 		if "CHIL" in family:
+			childbDates = []
 			for childStringID in family["CHIL"]:
 				childID = int(''.join(filter(str.isdigit, childStringID)))
 				child = searchByID(indis, len(indis), 0, childID)
@@ -330,6 +331,11 @@ def init():
 					family_names.append(child['NAME'])
 	
 				childBirthdate = child["BIRT"]
+				childbDates.extend(childBirthdate)
+
+			#US14 - Multiple births
+			if multipleBirths(childbDates):
+				errors.append("No more than 5 siblings should share same birthdates")
 
 				#US33 - List all orphaned children (both parents dead and child < 18 years old)
 				if 'DEAT' in husb and 'DEAT' in wife and child['AGE'] < 18:

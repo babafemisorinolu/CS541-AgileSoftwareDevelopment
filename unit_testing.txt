@@ -1,15 +1,15 @@
 
 US08 - Birth before the marriage of parents (no more than 9 months after their divorce)
-Birth : 2023-03-08  Divorce :  2022-06-11 False
+Birth : 2023-04-06  Divorce :  2022-07-10 False
 .
 US08 - Birth before the marriage of parents (no more than 9 months after their divorce)
-Birth : 2023-03-08  Divorce :  2022-03-08 False
+Birth : 2023-04-06  Divorce :  2022-04-06 False
 .
 US08 - Birth before the marriage of parents
-Birth : 2023-03-08  Marriage :  2022-03-08 False
+Birth : 2023-04-06  Marriage :  2022-04-06 False
 .
 US08 - Birth before the marriage of parents
-Birth : 2023-03-08  Marriage :  2024-03-07 True
+Birth : 2023-04-06  Marriage :  2024-04-05 True
 .
 US18 - comparing if siblings can marry
 actual: ['ERROR: INDIVIDUAL: US18: Gabriel /Souza/ and Dorcas /Souza/ are siblings and should not marry one another!']
@@ -31,40 +31,46 @@ US05 - Marriage before death
 2015-12-21 2016-12-22 True
 .
 US04 - comparing the same dates
-2023-03-08 2023-03-08 True
+2023-04-06 2023-04-06 True
 .
 US04 - comparing with the day after
-2023-03-08 2023-03-09 False
+2023-04-06 2023-04-07 False
 .
 US04 - comparing with the day before
-2023-03-08 2023-03-07 True
+2023-04-06 2023-04-05 True
+.
+US14 - Multiple births
+True
 .
 US09 - if death of father was 1 month before
-2023-03-08 2023-11-13 True
+2023-04-06 2023-12-12 True
 .
 US09 - if death of mother was 9 months before
-2023-03-08 2022-06-11 False
+2023-04-06 2022-07-10 False
 .
 US09 - if death of mother was same day as birth
-2023-03-08 2023-03-08 True
+2023-04-06 2023-04-06 True
 .
 US01 - comparing the same dates
-2023-03-08 2023-03-08 True
+2023-04-06 2023-04-06 True
 .
 US01 - comparing with the day after
-2023-03-08 2023-03-09 False
+2023-04-06 2023-04-07 False
 .
 US01 - comparing with the day before
-2023-03-08 2023-03-07 True
+2023-04-06 2023-04-05 True
 .
-US06 - Divorce before Death
-2019-12-06 2022-08-06 True
+US06 - Divorce before death
+2016-12-21 2016-12-22 True
 .
 US16 - comparing male members of a family without having the same last name
 actual: ['ERROR: INDIVIDUAL: US16: Sebastian /Fernandez/ and Shester /Souza/ are male members of a family and should have the same last name!']
 expected: ['ERROR: INDIVIDUAL: US16: Sebastian /Fernandez/ and Shester /Souza/ are male members of a family and should have the same last name!']
 True
 .
+.
+US06 - Divorce before Death
+2019-12-06 2022-08-06 True
 .
 US03 - Birth before Death
 2000-12-06 2001-08-06 True
@@ -76,7 +82,7 @@ US25 - Unique first names in families
 set() {'Calvin /Williams/'} False
 .
 US25 - Unique first names in families
-set() {'Nathan /Williams/', 'Calvin /Williams/', 'Ruby /Smith/'} False
+set() {'Ruby /Smith/', 'Nathan /Williams/', 'Calvin /Williams/'} False
 .
 US25 - Unique first names in families
 set() {'Matt'} False
@@ -85,15 +91,15 @@ US25 - Unique first names in families
 {'Stephanie'} {'Stephanie'} True
 .
 US02 - comparing the same dates
-2023-03-08 2023-03-08 True
+2023-04-06 2023-04-06 True
 .
 US02 - comparing with the day after
-2023-03-08 2023-03-09 False
+2023-04-06 2023-04-07 False
 .
 US02 - comparing with the day before
-2023-03-08 2023-03-07 True
+2023-04-06 2023-04-05 True
 .
 ----------------------------------------------------------------------
-Ran 30 tests in 0.004s
+Ran 32 tests in 0.002s
 
 OK

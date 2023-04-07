@@ -338,8 +338,8 @@ class TestUserStoryThree(unittest.TestCase):
 		print(birth, death, testResult)
 		self.assertTrue(testResult)
 
-#US06 - Divorce before death 
-class TestUserStorySix(unittest.TestCase):
+#US36 - Divorce before death 
+class TestUserStoryThirtySix(unittest.TestCase):
 	def testDivorceBeforeDeath(self):
 		print()
 		divorce = datetime.strptime("2019-12-06", '%Y-%m-%d').date()
@@ -355,6 +355,16 @@ class TestUserStoryThirtyFive(unittest.TestCase):
 		print()
 		td = date.today()
 		birth = datetime.strptime("2023-02-23", '%Y-%m-%d').date()
+
+#US14 - multiple birth
+class TestUserStoryFourteen(unittest.TestCase):
+	def testMultipleBirth(self):
+		print()
+		siblingbdates = ['2023-05-12', '2023-05-12', '2023-05-13', '2023-05-14', '2023-05-14', '2023-05-15', '2023-05-15', '2023-05-15']
+		print("US14 - Multiple births")
+		testResult = multipleBirths(siblingbdates)
+		print(testResult)
+		self.assertTrue(testResult)
 	
 
 if __name__ == '__main__':

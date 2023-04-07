@@ -203,3 +203,19 @@ def listRecentBirth(today, birth):
 def listRecentDeath(today, death):
     diff = today - death
     return diff.days < 30
+
+
+#US14 - Multiple births
+def multipleBirths(birthdates):
+    birthdate_counts = {}
+    for date in birthdates:
+        if date in birthdate_counts:
+            birthdate_counts[date] += 1
+        else:
+            birthdate_counts[date] = 1
+    
+    for count in birthdate_counts.values():
+        if count > 5:
+            return False
+    
+    return True
