@@ -366,6 +366,16 @@ class TestUserStoryFourteen(unittest.TestCase):
 		print(testResult)
 		self.assertTrue(testResult)
 	
+#US12 - people too old
+class TestUserStoryTwelve(unittest.TestCase):
+	def testParentstooold(self):
+		print()
+		today_date = date.today()
+		testDate = today_date + timedelta(days = 90 * 365.25)
+		result = Parentstooold(today_date,testDate,90)
+		print("US12 - Parents too old : ", result)
+		self.assertTrue(result)
+		
 
 if __name__ == '__main__':
 	# tihs logs stdout to a file instead of the command line
