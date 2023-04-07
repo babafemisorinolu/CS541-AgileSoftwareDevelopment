@@ -21,6 +21,10 @@
 | @I20@ | Matt /Johnson/          | M     | 2020-05-21 |            |                  |     2 | True    | @F7@   |
 | @I22@ | Daniel /Smith/          | M     | 2000-09-12 |            |                  |    22 | True    | @F27@  |
 | @I23@ | Dorcas /Smith/          | F     | 1990-06-12 |            |                  |    32 | True    | @F27@  |
+| @I24@ | Jane /Doe/              | F     | 1994-05-06 |            | ['@F9@']         |    28 | True    |        |
+| @I25@ | Tom /Smith/             | M     | 1952-03-07 |            | ['@F9@']         |    71 | True    |        |
+| @I26@ | Jack /Doe/              | M     | 2020-01-16 |            |                  |     3 | True    | @F9@   |
+| @I27@ | Jill /Doe/              | F     | 2020-01-16 |            |                  |     3 | True    | @F9@   |
 | @I47@ | Elza /Teixeira/         | F     | 1865-03-01 | 2017-10-22 | ['@F12@']        |   152 | False   |        |
 | @I77@ | Dorcas /Smith/          | F     | 1990-06-12 |            |                  |    32 | True    | @F12@  |
 
@@ -31,6 +35,7 @@
 | @F4@  | @I8@   | @I7@   | ['@I9@', '@I10@']          | 2016-07-15 | Anthony /Grill/       | Schneider /Smith/     |            |
 | @F5@  | @I0@   | @I13@  | ['@I17@']                  | 2021-04-05 | Sebastian /Fernandez/ | Soraia /Sales/        | 2021-04-04 |
 | @F7@  | @I19@  | @I18@  | ['@I20@']                  | 2022-06-23 | Michael /Johnson/     | Natalie /Sales-Jones/ |            |
+| @F9@  | @I25@  | @I24@  | ['@I26@', '@I27@']         | 2019-07-06 | Tom /Smith/           | Jane /Doe/            |            |
 | @F12@ | @I11@  | @I47@  | ['@I1@', '@I13@']          | 1942-12-02 | Sebastian /Sales/     | Elza /Teixeira/       |            |
 | @F27@ | @I2@   | @I3@   | ['@I22@', '@I23@', '@I4@'] | 1945-07-01 | Chester /Smith/       | Rosa /Smith/          |            |
 | @F28@ | @I22@  | @I23@  |                            | 2023-02-21 | Daniel /Smith/        | Dorcas /Smith/        |            |
@@ -66,6 +71,18 @@ List of recent birth
 List of recent death
 There are no recent deaths
 
+List of Married couples with ages twice as old as the younger spouse
+| ID   | HUSB   | WIFE   | CHIL               | MARR       | DIV        | HUSB NAME             | WIFE NAME      |
+|------|--------|--------|--------------------|------------|------------|-----------------------|----------------|
+| @F5@ | @I0@   | @I13@  | ['@I17@']          | 2021-04-05 | 2021-04-04 | Sebastian /Fernandez/ | Soraia /Sales/ |
+| @F9@ | @I25@  | @I24@  | ['@I26@', '@I27@'] | 2019-07-06 |            | Tom /Smith/           | Jane /Doe/     |
+
+Multiple births
+| ID    | NAME       | SEX   | BIRT       | FAMC   |   AGE | ALIVE   |
+|-------|------------|-------|------------|--------|-------|---------|
+| @I26@ | Jack /Doe/ | M     | 2020-01-16 | @F9@   |     3 | True    |
+| @I27@ | Jill /Doe/ | F     | 2020-01-16 | @F9@   |     3 | True    |
+
 ERRORS
 ERROR: INDIVIDUAL: US01: @I9@: BIRT 06/05/23 occurs in the future.
 ERROR: INDIVIDUAL: US16: Chester /Smith/ and Barry /Smith-JNR/ are male members of a family and should have the same last name!
@@ -83,12 +100,14 @@ ERROR: FAMILY: US25: @F4@: First names of individuals in the family cannot be sa
 ERROR: FAMILY: US05: @F5@: marriage 04/05/21 should be before divorce 04/04/21.
 No more than 5 siblings should share same birthdates
 ERROR: FAMILY: US12: @F5@: BIRT of father on 11/24/00 should be less than 80 years that of Child @I17@: BIRT 08/12/13.
+ERROR: FAMILY: US12: @F5@: BIRT of mother on 10/09/64 should be less than 60 years that of Child @I17@: BIRT 08/12/13.
 ERROR: FAMILY: US05: @F7@: marriage 06/23/22 should be before death 06/20/19.
 No more than 5 siblings should share same birthdates
 ERROR: FAMILY: US09: @F7@: Child @I20@: BIRT 05/21/20 after DEAT of mother on 06/20/19.
 ERROR: FAMILY: US08: @F7@: Child @I20@: BIRT 05/21/20 should be after marriage 06/23/22.
 No more than 5 siblings should share same birthdates
-ERROR: FAMILY: US12: @F12@: BIRT of mother on 03/01/65 should be less than 60 years that of Child @I13@: BIRT 10/09/64.
+ERROR: FAMILY: US12: @F9@: BIRT of mother on 05/06/94 should be less than 60 years that of Child @I27@: BIRT 01/16/20.
+No more than 5 siblings should share same birthdates
 ERROR: FAMILY: US10: @F27@: Marriage 07/01/45 should be at least 14 years after birth of husband 08/09/75.
 ERROR: FAMILY: US10: @F27@: Marriage 07/01/45 should be at least 14 years after birth of wife 01/25/75.
 No more than 5 siblings should share same birthdates
