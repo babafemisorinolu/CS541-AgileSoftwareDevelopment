@@ -331,7 +331,7 @@ def init():
 					family_names.append(child['NAME'])
 	
 				childBirthdate = child["BIRT"]
-				childbDates.extend(childBirthdate)
+				childbDates.append(childBirthdate)
 
 			#US14 - Multiple births
 			if multipleBirths(childbDates):
@@ -341,14 +341,16 @@ def init():
 				if 'DEAT' in husb and 'DEAT' in wife and child['AGE'] < 18:
 					list_of_orphans.append(child)
 
-				#US12 - Mother should be less than 60 years older than her children and father should be less than 80 years older than his children
-				if not compareDates(childBirthdate, husb["BIRT"] + timedelta(days = 80 * 365.25)):
+
+				Parentstooold(childBirthdate, husb["BIRT"], 80)
+
+                #US12 - Mother should be less than 60 years older than her children and father should be less than 80 years older than his children
+				
+				if not Parentstooold(childBirthdate, husb["BIRT"], 80):
 					errors.append("ERROR: FAMILY: US12: " + family["ID"] + ": BIRT of father on " + husb["BIRT"].strftime("%x") + " should be less than 80 years that of Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + ".")
-				if not compareDates(childBirthdate, wife["BIRT"] + timedelta(days = 60 * 365.25)):
+				if not Parentstooold(childBirthdate, husb["BIRT"], 60):
 					errors.append("ERROR: FAMILY: US12: " + family["ID"] + ": BIRT of mother on " + wife["BIRT"].strftime("%x") + " should be less than 60 years that of Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + ".")
-
-
-
+		    
 				if not wife["ALIVE"] and not compareDates(childBirthdate, wife["DEAT"] + timedelta(weeks = 40)):
 					errors.append("ERROR: FAMILY: US09: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " after DEAT of mother on " + wife["DEAT"].strftime("%x") + ".")
 

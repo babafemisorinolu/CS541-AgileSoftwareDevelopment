@@ -75,16 +75,21 @@ ERROR: FAMILY: US02: @F27@: birth 08/09/75 should be before marriage 07/01/45.
 ERROR: FAMILY: US02: @F27@: birth 01/25/75 should be before marriage 07/01/45.
 ERROR: INDIVIDUAL: US07: Elza /Teixeira/ age (152) should be less than 150 years old 
 ERROR: INDIVIDUAL: US23: @I77@: Idividual birth date and name should not be the same as individual @I23@.
-ERROR: FAMILY: US09: @F0@: Child @I16@: BIRT 12/02/97 9 months after DEAT of father on 02/27/96.
+No more than 5 siblings should share same birthdates
 ERROR: FAMILY: US08: @F0@: Child @I18@: BIRT 04/30/94 should be after marriage 09/05/94.
+No more than 5 siblings should share same birthdates
+No more than 5 siblings should share same birthdates
 ERROR: FAMILY: US25: @F4@: First names of individuals in the family cannot be same.
 ERROR: FAMILY: US05: @F5@: marriage 04/05/21 should be before divorce 04/04/21.
+No more than 5 siblings should share same birthdates
 ERROR: FAMILY: US12: @F5@: BIRT of father on 11/24/00 should be less than 80 years that of Child @I17@: BIRT 08/12/13.
 ERROR: FAMILY: US05: @F7@: marriage 06/23/22 should be before death 06/20/19.
+No more than 5 siblings should share same birthdates
 ERROR: FAMILY: US09: @F7@: Child @I20@: BIRT 05/21/20 after DEAT of mother on 06/20/19.
 ERROR: FAMILY: US08: @F7@: Child @I20@: BIRT 05/21/20 should be after marriage 06/23/22.
-ERROR: FAMILY: US12: @F12@: BIRT of mother on 03/01/65 should be less than 80 years that of Child @I1@: BIRT 06/12/46.
-ERROR: FAMILY: US12: @F12@: BIRT of mother on 03/01/65 should be less than 80 years that of Child @I13@: BIRT 10/09/64.
+No more than 5 siblings should share same birthdates
+ERROR: FAMILY: US12: @F12@: BIRT of mother on 03/01/65 should be less than 60 years that of Child @I13@: BIRT 10/09/64.
 ERROR: FAMILY: US10: @F27@: Marriage 07/01/45 should be at least 14 years after birth of husband 08/09/75.
 ERROR: FAMILY: US10: @F27@: Marriage 07/01/45 should be at least 14 years after birth of wife 01/25/75.
+No more than 5 siblings should share same birthdates
 ERROR: FAMILY: US24: @F30@: Marriage date, husband name, and wife name should not be the same as family @F28@.

@@ -32,7 +32,7 @@ def compareDates(earlierDate, laterDate):
 def dateError(earlierDate, laterDate, famID, userStory):
     newError = []
     if not compareDates(earlierDate, laterDate):
-	    newError.append("ERROR: FAMILY: " + userStory[0] + ": " + famID + ": " + userStory[1] + " " + earlierDate.strftime("%x") + " should be before " + userStory[2] + " " + laterDate.strftime("%x") + ".")
+        newError.append("ERROR: FAMILY: " + userStory[0] + ": " + famID + ": " + userStory[1] + " " + earlierDate.strftime("%x") + " should be before " + userStory[2] + " " + laterDate.strftime("%x") + ".")
     return newError
 
 #US42 - Reject illegitimate dates
@@ -222,6 +222,11 @@ def multipleBirths(birthdates):
     
     return True
 
+
+#US12 parents are too old
+def Parentstooold(childBirthdate, parentBirthdate, years):
+    return compareDates(childBirthdate, parentBirthdate + timedelta(days = years * 365.25))
+
 #US32 List multiple births
 #List all multiple births in a GEDCOM file
 def listMultipleBirths(fams,indis):
@@ -269,5 +274,6 @@ def listLargeAgeDiff(fams,indis):
             output.append(family);    
         
         
+
 
     return output
