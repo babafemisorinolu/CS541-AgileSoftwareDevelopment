@@ -370,6 +370,13 @@ def init():
 		if result :
 			errors.append("ERROR: FAMILY: US25: " + family["ID"] + ": First names of individuals in the family cannot be same.")
 			
+		#US32 List multiple births
+		multipleBirths=listMultipleBirths(fams,indis);
+		
+		#US34 List large age differences
+		MarriagesWithTwiceAges=listLargeAgeDiff(fams,indis);
+
+
 
 	
 	# write table results to a new file
@@ -403,6 +410,19 @@ def init():
 		outfile.write("There are no recent deaths")
 	outfile.write(tabulate(list_of_death, headers = "keys", tablefmt="github"))
 	outfile.write('\n\n')
+
+	outfile.write('List of Married couples with ages twice as old as the younger spouse\n')
+	if len(MarriagesWithTwiceAges) == 0:
+		outfile.write("There are no couples with ages twice as old as the younger spouse")
+	outfile.write(tabulate(MarriagesWithTwiceAges, headers = "keys", tablefmt="github"))
+	outfile.write('\n\n')
+
+	outfile.write('Multiple births\n')
+	if len(multipleBirths) == 0:
+		outfile.write("There are no multiple births")
+	outfile.write(tabulate(multipleBirths, headers = "keys", tablefmt="github"))
+	outfile.write('\n\n')
+
 
 	outfile.write('ERRORS\n')	
 	for error in errors:

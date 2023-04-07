@@ -5,7 +5,9 @@
 
 from datetime import date, datetime, timedelta
 from itertools import groupby
- 
+import collections
+from collections import Counter
+
 # convert string to datetime object
 def dateConversion(date):
     try:
@@ -219,3 +221,53 @@ def multipleBirths(birthdates):
             return False
     
     return True
+
+#US32 List multiple births
+#List all multiple births in a GEDCOM file
+def listMultipleBirths(fams,indis):
+    output=[]
+    for family in fams:
+        if 'CHIL' in family:
+            children=family["CHIL"]
+            dobs=[]
+            multipledob=[]
+            for i in children:
+                 chilID = int(''.join(filter(str.isdigit, i)))
+                 chil = searchByID(indis, len(indis), 0, chilID)
+                 dob=chil['BIRT']   
+                 dobs.append(dob)
+                 multipledob=([item for item, count in collections.Counter(dobs).items() if count > 1])
+
+            for i in children:
+                 chilID = int(''.join(filter(str.isdigit, i)))
+                 chil = searchByID(indis, len(indis), 0, chilID)
+                 dob=chil['BIRT']   
+                 if (dob in multipledob):
+                     output.append(chil)
+                         
+    return output;
+
+#US34 List large age differences
+#List all couples who were married when the older spouse was more than twice as old as the younger spouse
+def listLargeAgeDiff(fams,indis):
+    output=[]
+    for family in fams:
+        
+        husbID = int(''.join(filter(str.isdigit, family["HUSB"])))
+        husb = searchByID(indis, len(indis), 0, husbID)
+        wifeID = int(''.join(filter(str.isdigit, family["WIFE"])))
+        wife = searchByID(indis, len(indis), 0, wifeID)
+        #print(wife, husb)
+        ages = [wife['AGE'],husb['AGE']]
+        ages.sort()
+
+        #print('wife age', wife['AGE'])
+        #print('husb age', husb['AGE'])
+        #print(ages)
+
+        if(ages[1]>=2*ages[0]):
+            output.append(family);    
+        
+        
+
+    return output
