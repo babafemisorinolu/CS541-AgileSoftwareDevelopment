@@ -343,9 +343,9 @@ def init():
 
 				#US12 - Mother should be less than 60 years older than her children and father should be less than 80 years older than his children
 				if not compareDates(childBirthdate, husb["BIRT"] + timedelta(days = 80 * 365.25)):
-					errors.append("ERROR: FAMILY: US12: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " after BIRT of father on " + husb["BIRT"].strftime("%x") + ".")
+					errors.append("ERROR: FAMILY: US12: " + family["ID"] + ": BIRT of father on " + husb["BIRT"].strftime("%x") + " should be less than 80 years that of Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + ".")
 				if not compareDates(childBirthdate, wife["BIRT"] + timedelta(days = 60 * 365.25)):
-					errors.append("ERROR: FAMILY: US12: " + family["ID"] + ": Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + " after BIRT of mother on " + wife["BIRT"].strftime("%x") + ".")
+					errors.append("ERROR: FAMILY: US12: " + family["ID"] + ": BIRT of mother on " + wife["BIRT"].strftime("%x") + " should be less than 60 years that of Child " + childStringID + ": BIRT " + childBirthdate.strftime("%x") + ".")
 
 
 
