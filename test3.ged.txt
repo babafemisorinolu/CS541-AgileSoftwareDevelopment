@@ -58,6 +58,15 @@ List of deceased individuals
 | @I18@ | Natalie /Sales-Jones/ | F     | 1994-04-30 | 2019-06-20 | ['@F7@']         |    25 | False   | @F0@   |
 | @I47@ | Elza /Teixeira/       | F     | 1865-03-01 | 2017-10-22 | ['@F12@']        |   152 | False   |        |
 
+List of living married individuals
+| ID    | HUSB   | WIFE   | CHIL                       | MARR       | HUSB NAME       | WIFE NAME         |
+|-------|--------|--------|----------------------------|------------|-----------------|-------------------|
+| @F4@  | @I8@   | @I7@   | ['@I9@', '@I10@']          | 2016-07-15 | Anthony /Grill/ | Schneider /Smith/ |
+| @F9@  | @I25@  | @I24@  | ['@I26@', '@I27@']         | 2019-07-06 | Tom /Smith/     | Jane /Doe/        |
+| @F27@ | @I2@   | @I3@   | ['@I22@', '@I23@', '@I4@'] | 1945-07-01 | Chester /Smith/ | Rosa /Smith/      |
+| @F28@ | @I22@  | @I23@  |                            | 2023-02-21 | Daniel /Smith/  | Dorcas /Smith/    |
+| @F30@ | @I22@  | @I23@  |                            | 2023-02-21 | Daniel /Smith/  | Dorcas /Smith/    |
+
 List of orphans
 | ID    | NAME                | SEX   | BIRT       | FAMC   |   AGE | ALIVE   |
 |-------|---------------------|-------|------------|--------|-------|---------|

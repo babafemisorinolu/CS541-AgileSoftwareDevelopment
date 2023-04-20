@@ -177,7 +177,7 @@ def init():
 	try:
 		filename = input("Please enter the name of the file (defaults to test3.ged if no file given): ")
 		if(filename==""):
-			filename="test3.ged"
+			filename="/Users/sanikachavan/Desktop/Sprint/CS555-AgileSoftwareDevelopment/test3.ged"
 		with open(filename, 'r') as infile:
 			for line in infile:
 				readLine(line);
@@ -210,11 +210,15 @@ def init():
 	list_of_birth = []
 	list_of_death = []
 	list_of_orphans = []
-
+	
 	indis_byBirthDate = {}
 
 	indis_byBirthDate = {}
 
+	#US30 List of living married people
+	list_of_living_married = listLivingMarried(fams,indis)
+
+	
 	for person in indis:
 		person = getAge(currDate, person)
 
@@ -395,6 +399,10 @@ def init():
 
 	outfile.write('List of deceased individuals\n')
 	outfile.write(tabulate(list_of_deceased, headers = "keys", tablefmt="github"))
+	outfile.write('\n\n')
+
+	outfile.write('List of living married individuals\n')
+	outfile.write(tabulate(list_of_living_married, headers = "keys", tablefmt="github"))
 	outfile.write('\n\n')
 
 	outfile.write('List of orphans\n')

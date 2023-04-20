@@ -274,3 +274,16 @@ def listLargeAgeDiff(fams,indis):
             output.append(family);    
         
     return output
+
+#US30 List all living married people in a GEDCOM file
+def listLivingMarried(fams,indis):
+    output=[]
+    for family in fams:
+        if 'DIV' not in family:
+            husbID = int(''.join(filter(str.isdigit, family["HUSB"])))
+            husb = searchByID(indis, len(indis), 0, husbID)
+            wifeID = int(''.join(filter(str.isdigit, family["WIFE"])))
+            wife = searchByID(indis, len(indis), 0, wifeID)
+            if(('DEAT' not in husb) and ('DEAT' not in wife)):
+                output.append(family)
+    return output
