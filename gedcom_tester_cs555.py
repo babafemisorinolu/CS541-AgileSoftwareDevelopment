@@ -401,7 +401,7 @@ def init():
 	outfile.write(tabulate(list_of_deceased, headers = "keys", tablefmt="github"))
 	outfile.write('\n\n')
 
-	outfile.write('List of living married individuals\n')
+	outfile.write('List of living married people\n')
 	outfile.write(tabulate(list_of_living_married, headers = "keys", tablefmt="github"))
 	outfile.write('\n\n')
 
