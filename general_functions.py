@@ -273,7 +273,4 @@ def listLargeAgeDiff(fams,indis):
         if(ages[1]>=2*ages[0]):
             output.append(family);    
         
-        
-
-
     return output
