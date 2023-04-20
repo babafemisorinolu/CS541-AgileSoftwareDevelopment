@@ -287,3 +287,9 @@ def listLivingMarried(fams,indis):
             if(('DEAT' not in husb) and ('DEAT' not in wife)):
                 output.append(family)
     return output
+
+#US21 Correct gender for role
+def correctGenderForRole(husb,wife):
+    if husb['SEX'] != 'M' or wife['SEX'] != 'F':
+        return True
+    return False

@@ -286,6 +286,10 @@ def init():
 		family["HUSB NAME"] = husb["NAME"]
 		family["WIFE NAME"] = wife["NAME"]
 
+		#US21 - Correct gender for role
+		if correctGenderForRole(husb,wife):
+			errors.append("ERROR: FAMILY: US21: " + family["ID"] + ": Husband in family should be male and wife in family should be female.")
+		
 		# US05 - Marriage before death
 		marr = family["MARR"]
 		if 'DEAT' in husb:

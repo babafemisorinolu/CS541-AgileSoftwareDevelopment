@@ -1,6 +1,18 @@
 0 HEAD
 0 NOTE Github repository: babafemisorinolu/CS555-AgileSoftwareDevelopment
 0 NOTE Four Generations of imaginary family
+0 @I34@ INDI
+1 NAME Cole /Smith/
+1 SEX F
+1 BIRT
+2 DATE 24 MAY 1994
+1 FAMS @F10@
+0 @I35@ INDI
+1 NAME Jenny /Smith/
+1 SEX M
+1 BIRT
+2 DATE 13 NOV 1997
+1 FAMS @F10@
 0 @I23@ INDI
 1 NAME Dorcas /Smith/
 1 SEX F
@@ -250,4 +262,9 @@
 1 CHIL @I27@
 1 MARR
 2 DATE 6 JUL 2019
+0 @F10@ FAM
+1 HUSB @I34@
+1 WIFE @I35@
+1 MARR
+2 DATE 7 AUG 2021
 0 TRLR
