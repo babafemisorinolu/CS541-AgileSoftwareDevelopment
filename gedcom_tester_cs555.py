@@ -177,7 +177,7 @@ def init():
 	try:
 		filename = input("Please enter the name of the file (defaults to test3.ged if no file given): ")
 		if(filename==""):
-			filename="/Users/sanikachavan/Desktop/Sprint/CS555-AgileSoftwareDevelopment/test3.ged"
+			filename="test3.ged"
 		with open(filename, 'r') as infile:
 			for line in infile:
 				readLine(line);
@@ -218,7 +218,7 @@ def init():
 	#US30 List of living married people
 	list_of_living_married = listLivingMarried(fams,indis)
 
-	
+
 	for person in indis:
 		person = getAge(currDate, person)
 
