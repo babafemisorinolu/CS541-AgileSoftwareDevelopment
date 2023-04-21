@@ -61,6 +61,7 @@ def validOutput(fileLine, args, isValid):
             
     return returnOutput;
 
+# US27 - Include individual ages
 # calculates an individual's age and whether they are alive, adds this to their dictionary
 def getAge(today, personInfo):
     birth = personInfo["BIRT"]
