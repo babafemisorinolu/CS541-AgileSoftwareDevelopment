@@ -375,6 +375,18 @@ class TestUserStoryTwelve(unittest.TestCase):
 		result = Parentstooold(today_date,testDate,90)
 		print("US12 - Parents too old : ", result)
 		self.assertTrue(result)
+	
+	#US21 - Correct gender for roles
+class TestUserStoryTwentyOne(unittest.TestCase):
+	def testcorrectGenderForRole(self):
+		print()
+		husb = {'ID': '@I15@', 'NAME': 'Matt /Jones/', 'SEX': 'F', 'AGE': 33, 'ALIVE': False}
+		wife = {'ID': '@I13@', 'NAME': 'Soraia /Sales/', 'SEX': 'M',  'FAMS': ['@F5@', '@F0@'], 'FAMC': '@F12@', 'AGE': 58, 'ALIVE': False}
+		result = correctGenderForRole(husb,wife)
+		print("US21 - Correct gender for roles : ",result)
+		self.assertTrue(result)
+
+		
 
 if __name__ == '__main__':
 	# tihs logs stdout to a file instead of the command line
