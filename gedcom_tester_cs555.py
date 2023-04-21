@@ -411,6 +411,11 @@ def init():
 		#US34 List large age differences
 		MarriagesWithTwiceAges=listLargeAgeDiff(fams,indis);
 
+		#US38	List upcoming birthdays	
+		upcoming_birthdays=listUpcomingBirthdays(indis);
+		#US39	List upcoming anniversaries	
+		upcoming_anniversaries=listUpcomingAnniversaries(fams)
+
 
 
 	
@@ -467,6 +472,19 @@ def init():
 		outfile.write("There are no recent survivors")
 	outfile.write(tabulate(list_of_survivors, headers = "keys", tablefmt="github"))
 	outfile.write('\n\n')
+
+	outfile.write('Upcoming birthdays\n')
+	if len(upcoming_birthdays) == 0:
+		outfile.write("There are no upcoming birthdays")
+	outfile.write(tabulate(upcoming_birthdays, headers = "keys", tablefmt="github"))
+	outfile.write('\n\n')
+
+	outfile.write('Upcoming anniversaries\n')
+	if len(upcoming_anniversaries) == 0:
+		outfile.write("There are no upcoming anniversaries")
+	outfile.write(tabulate(upcoming_anniversaries, headers = "keys", tablefmt="github"))
+	outfile.write('\n\n')
+
 
 
 	outfile.write('ERRORS\n')	

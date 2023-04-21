@@ -303,3 +303,40 @@ def checkBirthdays(birthdays):
             if delta < 240:
                 return False
     return True
+
+
+#US38	List upcoming birthdays	
+# List all living people in a GEDCOM file whose birthdays occur in the next 30 days
+def listUpcomingBirthdays(indis):
+    today = date.today()
+    # print(today)
+    result=[]
+    for person in indis:
+        user=person['BIRT']
+     
+        curr_bday = date(today.year, user.month, user.day)
+
+        if(curr_bday>today):
+            result.append(person)
+        
+    return result;
+    
+    
+
+
+#US39	List upcoming anniversaries	
+# List all living couples in a GEDCOM file whose marriage anniversaries occur in the next 30 days
+def listUpcomingAnniversaries(fams):
+    today = date.today()
+    result=[]
+    for family in fams:
+        
+        user=family['MARR']
+     
+        curr_annv = date(today.year, user.month, user.day)
+
+        if(curr_annv>today):
+            result.append(family)
+        
+        
+    return result;
