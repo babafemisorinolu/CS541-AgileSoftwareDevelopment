@@ -293,3 +293,13 @@ def correctGenderForRole(husb,wife):
     if husb['SEX'] != 'M' or wife['SEX'] != 'F':
         return True
     return False
+
+
+#US13 Siblings spacing
+def checkBirthdays(birthdays):
+    for i, bday1 in enumerate(birthdays):
+        for j, bday2 in enumerate(birthdays[i+1:], i+1):
+            delta = abs((bday1 - bday2).days)
+            if delta < 240:
+                return False
+    return True

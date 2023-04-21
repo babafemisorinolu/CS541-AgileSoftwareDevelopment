@@ -397,7 +397,15 @@ class TestUserStoryThirty(unittest.TestCase):
 		print("US30 - List living married : ",result)
 		print(result ==  expected)
 		self.assertEqual(1,1)
-		
+
+#US13 Siblings spacing
+class TestUserStoryThirteen(unittest.TestCase):
+	def testcheckBirthdays(self):
+		print()
+		birthdays = [datetime(2000, 1, 1), datetime(2000, 10, 1), datetime(2001, 6, 1)]
+		result = checkBirthdays(birthdays)
+		print("US13 - Sibling spacing ", result)
+		self.assertTrue(result)	
 
 if __name__ == '__main__':
 	# tihs logs stdout to a file instead of the command line

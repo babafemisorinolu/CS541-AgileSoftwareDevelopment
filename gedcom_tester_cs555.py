@@ -210,6 +210,7 @@ def init():
 	list_of_birth = []
 	list_of_death = []
 	list_of_orphans = []
+	list_of_survivors = []
 	
 	indis_byBirthDate = {}
 
@@ -250,6 +251,7 @@ def init():
 				list_of_death.append(person)
 			if not compareDates(birth, death):
 				errors.append("ERROR: INDIVIDUAL: US03: " + person["NAME"] + " birth " + birth.strftime("%x") + " should be before death " + death.strftime("%x") + ".")
+			
 
 		# US02 - Birth before Marriage
 		if 'FAMS' in person:
@@ -292,9 +294,29 @@ def init():
 		# US05 - Marriage before death
 		marr = family["MARR"]
 		if 'DEAT' in husb:
+			#US37 List recent survivors
+			husbDate = husb['DEAT']
+			delta = abs((husbDate - currDate).days)
+			if delta < 30:
+				list_of_survivors.append(wife['NAME'])
+				if "CHIL" in family:
+					for childStringID in family["CHIL"]:
+						childID = int(''.join(filter(str.isdigit, childStringID)))
+						child = searchByID(indis, len(indis), 0, childID)
+						list_of_survivors.append(child['NAME'])
 			errors.extend(dateError(marr, husb["DEAT"], family["ID"], ["US05", "marriage", "death"]))
 		
 		if 'DEAT' in wife:
+			#US37 List recent survivors
+			wifeDate = wife['DEAT']
+			delta = abs((wifeDate - currDate).days)
+			if delta < 30:
+				list_of_survivors.append(husb['NAME'])
+				if "CHIL" in family:
+					for childStringID in family["CHIL"]:
+						childID = int(''.join(filter(str.isdigit, childStringID)))
+						child = searchByID(indis, len(indis), 0, childID)
+						list_of_survivors.append(child['NAME'])
 			errors.extend(dateError(marr, wife["DEAT"], family["ID"], ["US05", "marriage", "death"]))
 
 		# US24 - Unique families by spouses
@@ -340,6 +362,10 @@ def init():
 				childBirthdate = child["BIRT"]
 				childbDates.append(childBirthdate)
 
+			#US13 Siblings spacing
+			if not checkBirthdays(childbDates):
+				errors.append("Birthdays must be more than 8 months apart.")
+			
 			#US14 - Multiple births
 			if multipleBirths(childbDates):
 				errors.append("No more than 5 siblings should share same birthdates")
@@ -434,6 +460,12 @@ def init():
 	if len(multipleBirths2) == 0:
 		outfile.write("There are no multiple births")
 	outfile.write(tabulate(multipleBirths2, headers = "keys", tablefmt="github"))
+	outfile.write('\n\n')
+
+	outfile.write('List of recent survivors\n')
+	if len(list_of_death) == 0:
+		outfile.write("There are no recent survivors")
+	outfile.write(tabulate(list_of_survivors, headers = "keys", tablefmt="github"))
 	outfile.write('\n\n')
 
 
