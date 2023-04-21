@@ -218,7 +218,6 @@ def init():
 	#US30 List of living married people
 	list_of_living_married = listLivingMarried(fams,indis)
 
-
 	for person in indis:
 		person = getAge(currDate, person)
 

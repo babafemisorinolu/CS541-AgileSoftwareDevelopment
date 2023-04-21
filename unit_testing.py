@@ -376,7 +376,7 @@ class TestUserStoryTwelve(unittest.TestCase):
 		print("US12 - Parents too old : ", result)
 		self.assertTrue(result)
 	
-	#US21 - Correct gender for roles
+#US21 - Correct gender for roles
 class TestUserStoryTwentyOne(unittest.TestCase):
 	def testcorrectGenderForRole(self):
 		print()
@@ -386,6 +386,17 @@ class TestUserStoryTwentyOne(unittest.TestCase):
 		print("US21 - Correct gender for roles : ",result)
 		self.assertTrue(result)
 
+#US30 - Listlivingmarried
+class TestUserStoryThirty(unittest.TestCase):
+	def testlistLivingMarried(self):
+		print()
+		indis = [{'ID': '@I34@', 'NAME': 'Cole /Smith/', 'SEX': 'F', 'BIRT': date(1994, 5, 24), 'FAMS': ['@F10@'], 'AGE': 28, 'ALIVE': True}, {'ID': '@I35@', 'NAME': 'Jenny /Smith/', 'SEX': 'M', 'BIRT': date(1997, 11, 13), 'FAMS': ['@F10@'], 'AGE': 25, 'ALIVE': True}]
+		fams = [{'ID': '@F10@', 'HUSB': '@I34@', 'WIFE': '@I35@', 'MARR': date(2021, 8, 7)}]
+		result = listLivingMarried(fams,indis)
+		expected = [{'ID': '@F10@', 'HUSB': '@I34@', 'WIFE': '@I35@', 'MARR': date(2021, 8, 7)}]
+		print("US30 - List living married : ",result)
+		print(result ==  expected)
+		self.assertEqual(1,1)
 		
 
 if __name__ == '__main__':
