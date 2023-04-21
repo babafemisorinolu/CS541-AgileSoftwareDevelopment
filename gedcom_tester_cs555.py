@@ -351,6 +351,7 @@ def init():
 		# US09 - Birth before death of parents
 		if "CHIL" in family:
 			childbDates = []
+			children = []
 			for childStringID in family["CHIL"]:
 				childID = int(''.join(filter(str.isdigit, childStringID)))
 				child = searchByID(indis, len(indis), 0, childID)
@@ -358,9 +359,14 @@ def init():
 					raise Exception("Wife ID must exist.")
 				else:
 					family_names.append(child['NAME'])
+					children.append(child)
 	
 				childBirthdate = child["BIRT"]
 				childbDates.append(childBirthdate)
+				
+			# US28 - Order siblings by age
+			children = sorted(children, key=lambda d: d["AGE"], reverse = True)
+			family["CHIL"] = [child["ID"] for child in children]
 
 			#US13 Siblings spacing
 			if not checkBirthdays(childbDates):
